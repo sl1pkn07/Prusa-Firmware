@@ -2141,16 +2141,21 @@ static void lcd_unLoadFilament()
      preheat_or_continue(FilamentAction::UnLoad);
 }
 
-void lcd_wait_interact() {
+void lcd_wait_interact(const char* filament_name) {
 
   lcd_clear();
 
   lcd_puts_at_P(0, 0, _T(MSG_INSERT_FILAMENT));
+  lcd_set_cursor(0, 1);
+  if (filament_name[0]) {
+      lcd_print(filament_name);
+      lcd_set_cursor(0, 2);
+  }
 #ifdef FILAMENT_SENSOR
   if (!fsensor.getAutoLoadEnabled())
 #endif //FILAMENT_SENSOR
   {
-    lcd_puts_at_P(0, 1, _T(MSG_PRESS));
+    lcd_puts_P(_T(MSG_PRESS));
   }
 }
 
@@ -2187,12 +2192,15 @@ void lcd_loading_color() {
 }
 
 
-void lcd_loading_filament() {
-
+void lcd_loading_filament(const char* filament_name) {
 
   lcd_clear();
 
   lcd_puts_at_P(0, 0, _T(MSG_LOADING_FILAMENT));
+  if (filament_name[0]) {
+      lcd_set_cursor(0, 1);
+      lcd_print(filament_name);
+  }
   lcd_puts_at_P(0, 2, _T(MSG_PLEASE_WAIT));
   uint16_t slow_seq_time = (FILAMENTCHANGE_FINALFEED * 1000ul) / FILAMENTCHANGE_EFEED_FINAL;
   uint16_t fast_seq_time = (FILAMENTCHANGE_FIRSTFEED * 1000ul) / FILAMENTCHANGE_EFEED_FIRST;

@@ -3387,7 +3387,7 @@ static void mmu_M600_load_filament(bool automatic) {
     st_synchronize();
 }
 
-static void gcode_M600(const bool automatic, const float x_position, const float y_position, const float z_shift, const float e_shift, const float e_shift_late) {
+static void gcode_M600(const bool automatic, const float x_position, const float y_position, const float z_shift, const float e_shift, const float e_shift_late, const char* filament_name) {
     st_synchronize();
 
     // When using an MMU, save the currently use slot number
@@ -3450,7 +3450,7 @@ static void gcode_M600(const bool automatic, const float x_position, const float
                 st_synchronize();
                 lcd_show_fullscreen_message_and_wait_P(_T(MSG_CHECK_IDLER));
             }
-            M600_load_filament();
+            M600_load_filament(filament_name);
         }
         else // MMU is enabled
         {
@@ -3458,7 +3458,7 @@ static void gcode_M600(const bool automatic, const float x_position, const float
             mmu_M600_load_filament(automatic);
         }
         if (!automatic)
-            repeat = M600_check_state_and_repeat();
+            repeat = M600_check_state_and_repeat(filament_name);
     }
     while (repeat);
 
@@ -7641,9 +7641,10 @@ Sigma_Exit:
     - `Z`    - relative lift Z, default MIN_Z_FOR_SWAP.
     - `E`    - initial retract, default FILAMENTCHANGE_FIRSTRETRACT
     - `L`    - later retract distance for removal, default FILAMENTCHANGE_FINALRETRACT
+    - `C`    - filament name to show during loading
     - `AUTO` - Automatically (only with MMU)
     */
-    case 600: //Pause for filament change X[pos] Y[pos] Z[relative lift] E[initial retract] L[later retract distance for removal]
+    case 600: //Pause for filament change X[pos] Y[pos] Z[relative lift] E[initial retract] L[later retract distance for removal] C"[filament name to show during loading]"
     {
     st_synchronize();
 
@@ -7669,10 +7670,20 @@ Sigma_Exit:
     if (code_seen('X')) x_position = code_value();
     if (code_seen('Y')) y_position = code_value();
 
+    // Filament name to show during the loading
+    char filament_name[LCD_WIDTH + 1] = "";
+    if (code_seen('C')) {
+        unquoted_string str = unquoted_string(strchr_pointer);
+        if (str.WasFound()) {
+            const uint8_t len = min(str.GetLength(), LCD_WIDTH);
+            memcpy(filament_name, str.GetUnquotedString(), len);
+        }
+    }
+
     if (MMU2::mmu2.Enabled() && code_seen_P(PSTR("AUTO")))
         automatic = true;
 
-    gcode_M600(automatic, x_position, y_position, z_shift, e_shift_init, e_shift_late);
+    gcode_M600(automatic, x_position, y_position, z_shift, e_shift_init, e_shift_late, filament_name);
 
     // From this point forward, power panic should not use
     // the partial backup in RAM since the extruder is no
@@ -10899,7 +10910,7 @@ void load_filament_final_feed()
 }
 
 //! @brief Wait for user to check the state
-bool M600_check_state_and_repeat()
+bool M600_check_state_and_repeat(const char* filament_name)
 {
     uint8_t lcd_change_filament_state = 10;
     while (lcd_change_filament_state != 0 && lcd_change_filament_state != 3)
@@ -10923,7 +10934,7 @@ bool M600_check_state_and_repeat()
                 // After user clicks knob, MMU will load the filament
                 mmu_M600_load_filament(false);
             } else {
-                M600_load_filament_movements();
+                M600_load_filament_movements(filament_name);
             }
             break;
 
@@ -11001,18 +11012,18 @@ void M600_wait_for_user() {
 		sound_wait_for_user_reset();
 }
 
-void M600_load_filament_movements()
+void M600_load_filament_movements(const char* filament_name)
 {
 	current_position[E_AXIS]+= FILAMENTCHANGE_FIRSTFEED;
 	plan_buffer_line_curposXYZE(FILAMENTCHANGE_EFEED_FIRST);
 	load_filament_final_feed();
-	lcd_loading_filament();
+	lcd_loading_filament(filament_name);
 	st_synchronize();
 }
 
-void M600_load_filament() {
+void M600_load_filament(const char* filament_name) {
 	//load filament for single material and MMU
-	lcd_wait_interact();
+	lcd_wait_interact(filament_name);
 
 	KEEPALIVE_STATE(PAUSED_FOR_USER);
 
@@ -11029,7 +11040,7 @@ void M600_load_filament() {
 	}
 	KEEPALIVE_STATE(IN_HANDLER);
 
-	M600_load_filament_movements();
+	M600_load_filament_movements(filament_name);
 
 	Sound_MakeCustom(50,1000,false);
 }

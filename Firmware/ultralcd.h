@@ -49,8 +49,8 @@ void lcd_reset_alert_level();
 
 uint8_t lcd_alright();
 void show_preheat_nozzle_warning();
-void lcd_wait_interact();
-void lcd_loading_filament();
+void lcd_wait_interact(const char* filament_name);
+void lcd_loading_filament(const char* filament_name);
 void lcd_change_success();
 void lcd_loading_color();
 void lcd_sdcard_stop();
