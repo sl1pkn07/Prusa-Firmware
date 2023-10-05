@@ -252,7 +252,7 @@ set(FW_SOURCES
     SdFatUtil.cpp
     SdFile.cpp
     SdVolume.cpp
-    sm4.c
+    sm4.cpp
     sound.cpp
     speed_lookuptable.cpp
     spi.c
