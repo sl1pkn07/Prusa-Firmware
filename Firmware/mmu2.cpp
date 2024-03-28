@@ -948,8 +948,10 @@ void MMU2::execute_extruder_sequence(const E_Step *sequence, uint8_t stepCount) 
     planner_synchronize();
 
     // Plan the moves
-    for (const E_Step *step = sequence, *end = sequence + stepCount; step != end; step++) {
+    const E_Step *step = sequence;
+    for (uint8_t i = stepCount; i > 0; --i) {
         extruder_move(pgm_read_float(&(step->extrude)), pgm_read_float(&(step->feedRate)));
+        step++;
     }
 
     // Wait for the moves to finish
