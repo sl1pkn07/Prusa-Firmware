@@ -1,4 +1,4 @@
-/// @file
+/// @file mmu2_protocol.cpp
 #include "mmu2_protocol.h"
 
 // protocol definition
@@ -112,11 +112,8 @@ DecodeStatus Protocol::DecodeRequest(uint8_t c) {
                 rqState = RequestStates::Code;
                 return DecodeStatus::MessageCompleted;
             }
-        } else {
-            requestMsg.code = RequestMsgCodes::unknown;
-            rqState = RequestStates::Error;
-            return DecodeStatus::Error;
         }
+        [[fallthrough]];
     default: //case error:
         if (IsNewLine(c)) {
             rqState = RequestStates::Code;
@@ -331,7 +328,7 @@ uint8_t Protocol::UInt8ToHex(uint8_t value, uint8_t *dst) {
     return charsOut;
 }
 
-uint8_t Protocol::UInt16ToHex(uint16_t value, uint8_t *dst) {
+uint8_t __attribute__((noinline)) Protocol::UInt16ToHex(uint16_t value, uint8_t *dst) {
     constexpr uint16_t topNibbleMask = 0xf000;
     if (value == 0) {
         *dst = '0';

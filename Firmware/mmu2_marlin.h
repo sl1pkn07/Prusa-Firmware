@@ -28,6 +28,7 @@ void extruder_schedule_turning(float feed_rate);
 float move_raise_z(float delta);
 
 void planner_abort_queued_moves();
+bool planner_draining();
 void planner_synchronize();
 bool planner_any_moves();
 float stepper_get_machine_position_E_mm();
