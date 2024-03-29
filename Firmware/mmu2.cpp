@@ -493,9 +493,10 @@ bool MMU2::unload() {
         return false;
     }
 
+    WaitForHotendTargetTempBeep();
+
     {
         ReportingRAII rep(CommandInProgress::UnloadFilament);
-        WaitForHotendTargetTempBeep();
         UnloadInner();
     }
 
@@ -573,13 +574,13 @@ bool MMU2::load_filament_to_nozzle(uint8_t slot) {
         return false;
     }
 
+    WaitForHotendTargetTempBeep();
+
     FullScreenMsgLoad(slot);
     {
         // used for MMU-menu operation "Load to Nozzle"
         ReportingRAII rep(CommandInProgress::ToolChange);
         FSensorBlockRunout blockRunout;
-
-        WaitForHotendTargetTempBeep();
 
         if (extruder != MMU2_NO_TOOL) { // we already have some filament loaded - free it + shape its tip properly
             filament_ramming();
