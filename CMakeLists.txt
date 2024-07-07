@@ -502,6 +502,7 @@ function(fw_add_variant variant_name)
   endforeach()
 
   string(FIND ${variant_name} "MK3" HAS_XFLASH)
+  string(FIND ${variant_name} "MK29" HAS_XFLASH)
   if(${HAS_XFLASH} GREATER_EQUAL 0)
     # X-Flash based build (catalogs appended to patched binary)
     set(FW_LANG_FINAL "${variant_name}_MULTILANG")
