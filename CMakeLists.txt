@@ -53,6 +53,7 @@ message(STATUS "Project version (Configuration.h): ${PROJECT_VERSION}")
 #message(STATUS "Project version commit number....: ${PROJECT_VERSION_COMMIT}") #For debuging
 message(STATUS "Filename suffix..................: ${FN_VERSION_SUFFIX}")
 message(STATUS "Filename debug suffix ...........: ${FN_VERSION_DEBUG_SUFFIX}")
+#message(STATUS "Host OS .........................: ${CMAKE_HOST_SYSTEM_NAME}")
 # testing
 # SET(FW_COMMIT_DSC "v3.13.0-1234")
 
@@ -587,15 +588,17 @@ function(fw_add_variant variant_name)
       add_custom_target(${FW_LANG_FINAL} DEPENDS ${FW_LANG_FINAL}.hex)
       list(APPEND ALL_VARIANT_HEXES ${FW_LANG_FINAL})
     endforeach()
-    add_custom_target("${variant_name}-All-Languages" DEPENDS ${ALL_VARIANT_HEXES})
-    add_custom_command(TARGET "${variant_name}-All-Languages"
-      POST_BUILD
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-      COMMAND ${CMAKE_COMMAND} -E make_directory "release"
-      COMMAND ${CMAKE_COMMAND} -E tar "cfv" "release/${variant_name}_${FN_VERSION_SUFFIX}.zip" --format=zip ${variant_name}_${FN_VERSION_SUFFIX}_en*.hex
-      BYPRODUCTS "${CMAKE_BINARY_DIR}/release/${variant_name}_${FN_VERSION_SUFFIX}.zip"
-      )
-    add_dependencies(ALL_MULTILANG "${variant_name}-All-Languages")
+    if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+      add_custom_target("${variant_name}-All-Languages" DEPENDS ${ALL_VARIANT_HEXES})
+      add_custom_command(TARGET "${variant_name}-All-Languages"
+        POST_BUILD
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E make_directory "release"
+        COMMAND ${CMAKE_COMMAND} -E tar "cfv" "release/${variant_name}_${FN_VERSION_SUFFIX}.zip" --format=zip ${variant_name}_${FN_VERSION_SUFFIX}_en*.hex
+        BYPRODUCTS "${CMAKE_BINARY_DIR}/release/${variant_name}_${FN_VERSION_SUFFIX}.zip"
+        )
+      add_dependencies(ALL_MULTILANG "${variant_name}-All-Languages")
+    endif()
   endif()
 endfunction()
 
@@ -639,13 +642,15 @@ endif()
 
 SET(REVO_FW_ZIP_NAME "E3D_REVO_FW_MK3_MK3S_MK3S+_${FN_VERSION_SUFFIX}.zip")
 
-add_custom_command(TARGET ALL_MULTILANG
-  POST_BUILD
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/release
-  BYPRODUCTS ${CMAKE_BINARY_DIR}/release/${REVO_FW_ZIP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${REVO_FW_ZIP_NAME}" --format=zip *E3DREVO*.hex
-  COMMAND ${CMAKE_COMMAND} -E rm *E3DREVO*.hex
-  )
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+  add_custom_command(TARGET ALL_MULTILANG
+    POST_BUILD
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/release
+    BYPRODUCTS ${CMAKE_BINARY_DIR}/release/${REVO_FW_ZIP_NAME}
+    COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${REVO_FW_ZIP_NAME}" --format=zip *E3DREVO*.hex
+    COMMAND ${CMAKE_COMMAND} -E rm *E3DREVO*.hex
+    )
+endif()
 
 #
 # Tests
