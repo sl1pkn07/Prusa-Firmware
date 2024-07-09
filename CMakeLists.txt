@@ -588,8 +588,8 @@ function(fw_add_variant variant_name)
       add_custom_target(${FW_LANG_FINAL} DEPENDS ${FW_LANG_FINAL}.hex)
       list(APPEND ALL_VARIANT_HEXES ${FW_LANG_FINAL})
     endforeach()
+    add_custom_target("${variant_name}-All-Languages" DEPENDS ${ALL_VARIANT_HEXES})
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-      add_custom_target("${variant_name}-All-Languages" DEPENDS ${ALL_VARIANT_HEXES})
       add_custom_command(TARGET "${variant_name}-All-Languages"
         POST_BUILD
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
@@ -597,8 +597,8 @@ function(fw_add_variant variant_name)
         COMMAND ${CMAKE_COMMAND} -E tar "cfv" "release/${variant_name}_${FN_VERSION_SUFFIX}.zip" --format=zip ${variant_name}_${FN_VERSION_SUFFIX}_en*.hex
         BYPRODUCTS "${CMAKE_BINARY_DIR}/release/${variant_name}_${FN_VERSION_SUFFIX}.zip"
         )
-      add_dependencies(ALL_MULTILANG "${variant_name}-All-Languages")
     endif()
+    add_dependencies(ALL_MULTILANG "${variant_name}-All-Languages")
   endif()
 endfunction()
 
