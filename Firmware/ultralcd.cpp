@@ -6883,6 +6883,7 @@ static bool lcd_selftest_manual_fan_check(const uint8_t _fan, const bool check_o
 	lcd_encoder = _default;
 
 	KEEPALIVE_STATE(PAUSED_FOR_USER);
+	lcd_consume_click();
 
 	do
 	{
