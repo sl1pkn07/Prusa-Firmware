@@ -885,7 +885,7 @@ StepStatus MMU2::LogicStep(bool reportErrors) {
     case Finished:
         // At this point it is safe to trigger a runout and not interrupt the MMU protocol
         CheckFINDARunout();
-        [[fallthrough]]; // let Finished be reported the same way like Processing
+        break;
 
     case Processing:
         OnMMUProgressMsg(logic.Progress());
