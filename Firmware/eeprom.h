@@ -246,7 +246,9 @@ static_assert(sizeof(Sheets) == EEPROM_SHEETS_SIZEOF, "Sizeof(Sheets) is not EEP
 | ^           | ^       | ^                                     | 01h 1        | ^                     | MMU cutter: __enabled__                           | ^            | ^
 | ^           | ^       | ^                                     | 02h 2        | ^                     | MMU cutter: __always__                            | ^            | ^
 | 0x0DAE 3502 | uint16  | EEPROM_UVLO_MESH_BED_LEVELING_FULL    | ???          | ff ffh 65535          | Saved MBL points                                  | Power Panic  | D3 Ax0dae C288
-| 0x0DAD 3501 | uint8   | _EEPROM_FREE_NR9_                     | ???          | ffh 255               | _Free EEPROM space_                               | _free space_ | D3 Ax0dad C1
+| 0x0DAD 3501 | uint8   | EEPROM_CHECK_FILAMENT                 | 01h 1        | ffh 255               | Check mode for filament is: __warn__              | LCD menu     | D3 Ax0dad C1
+| ^           | ^       | ^                                     | 02h 2        | ^                     | Check mode for filament is: __strict__            | ^            | ^
+| ^           | ^       | ^                                     | 00h 0        | ^                     | Check mode for filament is: __none__              | ^            | ^
 | 0x0DAC 3500 | bool    | EEPROM_MBL_MAGNET_ELIMINATION         | 01h 1        | ffh 255               | Mesh bed leveling does: __ignores__ magnets       | LCD menu     | D3 Ax0dac C1
 | ^           | ^       | ^                                     | 00h 0        | ^                     | Mesh bed leveling does: __NOT ignores__ magnets   | ^            | ^
 | 0x0DAB 3499 | uint8   | EEPROM_MBL_POINTS_NR                  | 03h 3        | ffh 255               | Mesh bed leveling points: __3x3__                 | LCD menu     | D3 Ax0dab C1
@@ -585,9 +587,9 @@ static_assert(sizeof(Sheets) == EEPROM_SHEETS_SIZEOF, "Sizeof(Sheets) is not EEP
 #define EEPROM_MMU_CUTTER_ENABLED (EEPROM_MMU_LOAD_FAIL - 1) // bool
 #define EEPROM_UVLO_MESH_BED_LEVELING_FULL     (EEPROM_MMU_CUTTER_ENABLED - 12*12*2) //allow 12 calibration points for future expansion
 
-#define _EEPROM_FREE_NR9_ (EEPROM_UVLO_MESH_BED_LEVELING_FULL-1) // uint8_t
+#define EEPROM_CHECK_FILAMENT (EEPROM_UVLO_MESH_BED_LEVELING_FULL-1) // uint8_t
 
-#define EEPROM_MBL_MAGNET_ELIMINATION (_EEPROM_FREE_NR9_ - 1)
+#define EEPROM_MBL_MAGNET_ELIMINATION (EEPROM_CHECK_FILAMENT - 1)
 #define EEPROM_MBL_POINTS_NR (EEPROM_MBL_MAGNET_ELIMINATION -1) //uint8_t number of points in one exis for mesh bed leveling
 #define EEPROM_MBL_PROBE_NR (EEPROM_MBL_POINTS_NR-1) //number of measurements for each point
 

@@ -245,6 +245,7 @@ ClCheckMode oCheckMode;
 ClCheckModel oCheckModel;
 ClCheckVersion oCheckVersion;
 ClCheckGcode oCheckGcode;
+ClCheckFilament oCheckFilament;
 
 void fCheckModeInit() {
     oCheckMode = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_MODE, (uint8_t)ClCheckMode::_Warn);
@@ -260,6 +261,7 @@ void fCheckModeInit() {
     oCheckModel = (ClCheckModel)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_MODEL, (uint8_t)ClCheckModel::_Warn);
     oCheckVersion = (ClCheckVersion)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_VERSION, (uint8_t)ClCheckVersion::_Warn);
     oCheckGcode = (ClCheckGcode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_GCODE, (uint8_t)ClCheckGcode::_Warn);
+    oCheckFilament = (ClCheckFilament)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_FILAMENT, (uint8_t)ClCheckFilament::_Warn);
 }
 
 static void render_M862_warnings(const char* warning, const char* strict, uint8_t check)
@@ -367,6 +369,21 @@ void fw_version_check(const char *pVersion) {
         ,_T(MSG_GCODE_NEWER_FIRMWARE_CANCELLED)
         ,(uint8_t)oCheckVersion
     );
+}
+
+void filament_presence_check() {
+    if (fsensor.isEnabled() && !fsensor.getFilamentPresent())
+    {
+        if (oCheckFilament == ClCheckFilament::_None)
+            return;
+
+        render_M862_warnings(
+            _T(MSG_MISSING_FILAMENT_CONTINUE)
+            ,_T(MSG_MISSING_FILAMENT_CANCELLED)
+            ,(uint8_t)oCheckFilament
+        );
+    }
+    
 }
 
 void gcode_level_check(uint16_t nGcodeLevel) {

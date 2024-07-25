@@ -4372,6 +4372,45 @@ do\
 }\
 while (0)
 
+static void lcd_check_filament_set(void)
+{
+switch(oCheckFilament)
+     {
+     case ClCheckFilament::_None:
+          oCheckFilament=ClCheckFilament::_Warn;
+          break;
+     case ClCheckFilament::_Warn:
+          oCheckFilament=ClCheckFilament::_Strict;
+          break;
+     case ClCheckFilament::_Strict:
+          oCheckFilament=ClCheckFilament::_None;
+          break;
+     default:
+          oCheckFilament=ClCheckFilament::_None;
+     }
+eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_FILAMENT,(uint8_t)oCheckFilament);
+}
+
+#define SETTINGS_CHECK_FILAMENT \
+do\
+{\
+    switch(oCheckFilament)\
+         {\
+         case ClCheckFilament::_None:\
+              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_NONE), lcd_check_filament_set);\
+              break;\
+         case ClCheckFilament::_Warn:\
+              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_WARN), lcd_check_filament_set);\
+              break;\
+         case ClCheckFilament::_Strict:\
+              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_STRICT), lcd_check_filament_set);\
+              break;\
+         default:\
+              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_NONE), lcd_check_filament_set);\
+         }\
+}\
+while (0)
+
 static void lcd_checking_menu(void)
 {
     MENU_BEGIN();
@@ -4379,6 +4418,7 @@ static void lcd_checking_menu(void)
     SETTINGS_MODE;
     SETTINGS_MODEL;
     SETTINGS_VERSION;
+    SETTINGS_CHECK_FILAMENT;
     MENU_END();
 }
 
