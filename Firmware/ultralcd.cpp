@@ -4214,25 +4214,6 @@ do\
 }\
 while (0)
 
-static void lcd_check_mode_set(void)
-{
-switch(oCheckMode)
-     {
-     case ClCheckMode::_None:
-          oCheckMode=ClCheckMode::_Warn;
-          break;
-     case ClCheckMode::_Warn:
-          oCheckMode=ClCheckMode::_Strict;
-          break;
-     case ClCheckMode::_Strict:
-          oCheckMode=ClCheckMode::_None;
-          break;
-     default:
-          oCheckMode=ClCheckMode::_None;
-     }
-eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODE,(uint8_t)oCheckMode);
-}
-
 static void lcd_nozzle_diameter_cycle(void) {
     uint16_t nDiameter;
     switch(oNozzleDiameter){
@@ -4274,65 +4255,44 @@ do\
 }\
 while (0)
 
-static void lcd_check_model_set(void)
-{
-switch(oCheckModel)
-     {
-     case ClCheckMode::_None:
-          oCheckModel=ClCheckMode::_Warn;
-          break;
-     case ClCheckMode::_Warn:
-          oCheckModel=ClCheckMode::_Strict;
-          break;
-     case ClCheckMode::_Strict:
-          oCheckModel=ClCheckMode::_None;
-          break;
-     default:
-          oCheckModel=ClCheckMode::_None;
-     }
-eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODEL,(uint8_t)oCheckModel);
+static void lcd_check_update_RAM(ClCheckMode * oCheckSetting) {
+    switch(*oCheckSetting) {
+        case ClCheckMode::_None:
+            *oCheckSetting = ClCheckMode::_Warn;
+            break;
+        case ClCheckMode::_Warn:
+            *oCheckSetting = ClCheckMode::_Strict;
+            break;
+        case ClCheckMode::_Strict:
+            *oCheckSetting = ClCheckMode::_None;
+            break;
+        default:
+            *oCheckSetting = ClCheckMode::_None;
+    }
 }
 
-static void lcd_check_version_set(void)
-{
-switch(oCheckVersion)
-     {
-     case ClCheckMode::_None:
-          oCheckVersion=ClCheckMode::_Warn;
-          break;
-     case ClCheckMode::_Warn:
-          oCheckVersion=ClCheckMode::_Strict;
-          break;
-     case ClCheckMode::_Strict:
-          oCheckVersion=ClCheckMode::_None;
-          break;
-     default:
-          oCheckVersion=ClCheckMode::_None;
-     }
-eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_VERSION,(uint8_t)oCheckVersion);
+static void lcd_check_mode_set() {
+    lcd_check_update_RAM(&oCheckMode);
+    eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODE,(uint8_t)oCheckMode);
 }
 
-static void lcd_check_filament_set(void)
-{
-switch(oCheckFilament)
-     {
-     case ClCheckMode::_None:
-          oCheckFilament=ClCheckMode::_Warn;
-          break;
-     case ClCheckMode::_Warn:
-          oCheckFilament=ClCheckMode::_Strict;
-          break;
-     case ClCheckMode::_Strict:
-          oCheckFilament=ClCheckMode::_None;
-          break;
-     default:
-          oCheckFilament=ClCheckMode::_None;
-     }
-eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_FILAMENT,(uint8_t)oCheckFilament);
+static void lcd_check_model_set() {
+    lcd_check_update_RAM(&oCheckModel);
+    eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODEL,(uint8_t)oCheckModel);
 }
 
-static void settings_check_toggle(ClCheckMode oCheckSetting, const char* msg, void (*func)(void)) {
-    switch(oCheckSetting) {
+static void lcd_check_version_set() {
+    lcd_check_update_RAM(&oCheckVersion);
+    eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_VERSION,(uint8_t)oCheckVersion);
+}
+
+static void lcd_check_filament_set() {
+    lcd_check_update_RAM(&oCheckFilament);
+    eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_FILAMENT,(uint8_t)oCheckFilament);
+}
+
+static void settings_check_toggle(ClCheckMode * oCheckSetting, const char* msg, void (*func)(void)) {
+    switch(*oCheckSetting) {
         case ClCheckMode::_None:
             MENU_ITEM_TOGGLE_P(msg, _T(MSG_NONE), func);
             break;
@@ -4351,10 +4311,10 @@ static void lcd_checking_menu(void)
 {
     MENU_BEGIN();
     MENU_ITEM_BACK_P(_T(MSG_HW_SETUP));
-    settings_check_toggle(oCheckMode, _T(MSG_NOZZLE), lcd_check_mode_set);
-    settings_check_toggle(oCheckModel, _T(MSG_MODEL), lcd_check_model_set);
-    settings_check_toggle(oCheckVersion, MSG_FIRMWARE, lcd_check_version_set);
-    settings_check_toggle(oCheckFilament, MSG_FILAMENT, lcd_check_filament_set);
+    settings_check_toggle(&oCheckMode, _T(MSG_NOZZLE), lcd_check_mode_set);
+    settings_check_toggle(&oCheckModel, _T(MSG_MODEL), lcd_check_model_set);
+    settings_check_toggle(&oCheckVersion, MSG_FIRMWARE, lcd_check_version_set);
+    settings_check_toggle(&oCheckFilament, MSG_FILAMENT, lcd_check_filament_set);
     MENU_END();
 }
 
