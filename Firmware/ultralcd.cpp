@@ -1815,6 +1815,7 @@ void lcd_print_target_temps_first_line() {
 
 static void mFilamentPrompt()
 {
+    lcd_timeoutToStatus.stop();
 lcd_print_target_temps_first_line();
 lcd_puts_at_P(0,1, _T(MSG_PRESS_KNOB));
 lcd_set_cursor(0,2);
