@@ -2585,6 +2585,11 @@ msgstr "Gör klar"
 msgid "Set not Ready"
 msgstr "Set inte klart"
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Skriv ut från värd"
+
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
 #: ../../Firmware/ultralcd.cpp:5245

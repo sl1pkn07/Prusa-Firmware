@@ -5165,6 +5165,7 @@ static void lcd_sheet_menu()
     MENU_END();
 }
 
+#ifndef REPLACE_SETREADY
 //! @brief Set printer state
 //! Sends the printer state for next print via LCD menu to host
 //! The host has to set the printer ready state with `M72` to keep printer in sync with the host
@@ -5178,6 +5179,7 @@ static void lcd_printer_ready_state_toggle()
         SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_READY);
     }
 }
+#endif
 
 #ifdef HOST_SHUTDOWN
 static void lcd_shutdown_menu()
@@ -5278,11 +5280,15 @@ static void lcd_main_menu()
         } else if (!Stopped) {
             MENU_ITEM_SUBMENU_P(_T(MSG_PREHEAT), lcd_preheat_menu);
             if (M79_timer_get_status()) {
+                #ifndef REPLACE_SETREADY
                 if(GetPrinterState() == PrinterState::IsReady) {
                     MENU_ITEM_FUNCTION_P(_T(MSG_SET_NOT_READY), lcd_printer_ready_state_toggle);
                 } else {
                     MENU_ITEM_FUNCTION_P(_T(MSG_SET_READY), lcd_printer_ready_state_toggle);
                 }
+                #else
+                    MENU_ITEM_FUNCTION_P(_T(MSG_HOSTPRINT), lcd_send_action_start);
+                #endif //REPLACE_SETREADY
             }
         }
         if (mesh_bed_leveling_flag == false && homing_flag == false && !printingIsPaused() && !processing_tcode) {

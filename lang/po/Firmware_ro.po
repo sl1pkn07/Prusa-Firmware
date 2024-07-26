@@ -2597,6 +2597,11 @@ msgstr "Printer pregătit"
 msgid "Set not Ready"
 msgstr "Print. nu pregătit"
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Print. de pe gazdă"
+
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
 #: ../../Firmware/ultralcd.cpp:5245

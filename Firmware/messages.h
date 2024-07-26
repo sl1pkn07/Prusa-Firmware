@@ -105,8 +105,12 @@ extern const char MSG_SELFTEST_MOTOR[];
 extern const char MSG_SELFTEST_FILAMENT_SENSOR[];
 extern const char MSG_SELFTEST_WIRINGERROR[];
 extern const char MSG_SETTINGS[];
+#ifndef REPLACE_SETREADY
 extern const char MSG_SET_READY[];
 extern const char MSG_SET_NOT_READY[];
+#else
+extern const char MSG_HOSTPRINT[];
+#endif
 #ifdef HOST_SHUTDOWN
 extern const char MSG_SHUTDOWN_HOST[];
 #endif //HOST_SHUTOWN

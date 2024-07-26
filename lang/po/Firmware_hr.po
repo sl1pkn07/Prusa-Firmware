@@ -2590,6 +2590,11 @@ msgstr "Set spreman"
 msgid "Set not Ready"
 msgstr "Set nije spreman"
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Printaj sa host"
+
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
 #: ../../Firmware/ultralcd.cpp:5245

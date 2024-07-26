@@ -1970,6 +1970,11 @@ msgstr ""
 msgid "Set not Ready"
 msgstr ""
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr ""
+
 #. MSG_SET_TEMPERATURE c=20
 #: ../../Firmware/messages.cpp:262 ../../Firmware/ultralcd.cpp:2730
 msgid "Set temperature:"

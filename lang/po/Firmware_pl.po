@@ -2588,6 +2588,11 @@ msgstr "Ustaw gotowość"
 msgid "Set not Ready"
 msgstr "Cofnij gotowość"
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Drukuj z hosta"
+
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
 #: ../../Firmware/ultralcd.cpp:5245

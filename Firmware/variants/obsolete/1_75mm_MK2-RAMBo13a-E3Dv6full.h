@@ -190,7 +190,13 @@ ADDITIONAL FEATURES SETTINGS
  HOST FEATURES
  *------------------------------------*/
 
-//#define HOST_SHUTDOWN              //Host supports "//action:shutdown" feature
+// Uncomment if the host supports '//action:shutdown'. It will add "Shutdown host" to the LCD meun. 
+//#define HOST_SHUTDOWN
+
+// Uncomment if the host doesn't support '//action:ready' & '//action:notready'.
+// This will replace the "Set Ready"/"Set not Ready" LCD menu entry with
+// "Print from host" and send '//action:start' instead.
+//#define REPLACE_SETREADY
 
 /*------------------------------------
 MOTOR CURRENT SETTINGS

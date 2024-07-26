@@ -2598,6 +2598,11 @@ msgstr "Gereed zetten"
 msgid "Set not Ready"
 msgstr "Niet gereed zetten"
 
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Print van host"
+
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
 #: ../../Firmware/ultralcd.cpp:5245

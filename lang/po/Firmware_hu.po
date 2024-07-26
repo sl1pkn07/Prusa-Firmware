@@ -2593,7 +2593,12 @@ msgstr "Készen áll"
 #. MSG_SET_NOT_READY c=18
 #: ../../Firmware/messages.cpp:106 ../../Firmware/ultralcd.cpp:5263
 msgid "Set not Ready"
-msgstr "Készen nem áll"
+msgstr "Nem áll készen"
+
+#. MSG_HOSTPRINT c=18
+#: ../../Firmware/messages.cpp:107 ../../Firmware/ultralcd.cpp:5285
+msgid "Print from host"
+msgstr "Nyomtatás gépről"
 
 #. MSG_REPRINT c=18
 #: ../../Firmware/messages.cpp:196 ../../Firmware/ultralcd.cpp:5243
