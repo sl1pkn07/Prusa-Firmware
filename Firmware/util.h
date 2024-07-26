@@ -55,38 +55,6 @@ enum class ClCheckMode:uint_least8_t
     _Undef=EEPROM_EMPTY_VALUE
 };
 
-enum class ClCheckModel:uint_least8_t
-{
-    _None,
-    _Warn,
-    _Strict,
-    _Undef=EEPROM_EMPTY_VALUE
-};
-
-enum class ClCheckVersion:uint_least8_t
-{
-    _None,
-    _Warn,
-    _Strict,
-    _Undef=EEPROM_EMPTY_VALUE
-};
-
-enum class ClCheckGcode:uint_least8_t
-{
-    _None,
-    _Warn,
-    _Strict,
-    _Undef=EEPROM_EMPTY_VALUE
-};
-
-enum class ClCheckFilament:uint_least8_t
-{
-    _None,
-    _Warn,
-    _Strict,
-    _Undef=EEPROM_EMPTY_VALUE
-};
-
 #define COMPARE_VALUE_EQUAL (((uint8_t)ClCompareValue::_Equal<<6)+((uint8_t)ClCompareValue::_Equal<<4)+((uint8_t)ClCompareValue::_Equal<<2)+((uint8_t)ClCompareValue::_Equal))
 enum class ClCompareValue:uint_least8_t
 {
@@ -137,10 +105,10 @@ private:
 
 extern ClNozzleDiameter oNozzleDiameter;
 extern ClCheckMode oCheckMode;
-extern ClCheckModel oCheckModel;
-extern ClCheckVersion oCheckVersion;
-extern ClCheckGcode oCheckGcode;
-extern ClCheckFilament oCheckFilament;
+extern ClCheckMode oCheckModel;
+extern ClCheckMode oCheckVersion;
+extern ClCheckMode oCheckGcode;
+extern ClCheckMode oCheckFilament;
 
 void fCheckModeInit();
 void nozzle_diameter_check(uint16_t nDiameter);

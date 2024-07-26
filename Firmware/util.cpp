@@ -202,7 +202,7 @@ bool eeprom_fw_version_older_than_p(const uint16_t (&ver_req)[4])
 
 bool show_upgrade_dialog_if_version_newer(const char *version_string)
 {
-    if(oCheckVersion == ClCheckVersion::_None)
+    if(oCheckVersion == ClCheckMode::_None)
         return false;
 
     int8_t upgrade = is_provided_version_newer(version_string);
@@ -242,10 +242,10 @@ void update_current_firmware_version_to_eeprom()
 
 ClNozzleDiameter oNozzleDiameter;
 ClCheckMode oCheckMode;
-ClCheckModel oCheckModel;
-ClCheckVersion oCheckVersion;
-ClCheckGcode oCheckGcode;
-ClCheckFilament oCheckFilament;
+ClCheckMode oCheckModel;
+ClCheckMode oCheckVersion;
+ClCheckMode oCheckGcode;
+ClCheckMode oCheckFilament;
 
 void fCheckModeInit() {
     oCheckMode = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_MODE, (uint8_t)ClCheckMode::_Warn);
@@ -258,10 +258,10 @@ void fCheckModeInit() {
     oNozzleDiameter = (ClNozzleDiameter)eeprom_init_default_byte((uint8_t *)EEPROM_NOZZLE_DIAMETER, (uint8_t)ClNozzleDiameter::_Diameter_400);
     eeprom_init_default_word((uint16_t *)EEPROM_NOZZLE_DIAMETER_uM, EEPROM_NOZZLE_DIAMETER_uM_DEFAULT);
 
-    oCheckModel = (ClCheckModel)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_MODEL, (uint8_t)ClCheckModel::_Warn);
-    oCheckVersion = (ClCheckVersion)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_VERSION, (uint8_t)ClCheckVersion::_Warn);
-    oCheckGcode = (ClCheckGcode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_GCODE, (uint8_t)ClCheckGcode::_Warn);
-    oCheckFilament = (ClCheckFilament)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_FILAMENT, (uint8_t)ClCheckFilament::_Warn);
+    oCheckModel = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_MODEL, (uint8_t)ClCheckMode::_Warn);
+    oCheckVersion = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_VERSION, (uint8_t)ClCheckMode::_Warn);
+    oCheckGcode = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_GCODE, (uint8_t)ClCheckMode::_Warn);
+    oCheckFilament = (ClCheckMode)eeprom_init_default_byte((uint8_t *)EEPROM_CHECK_FILAMENT, (uint8_t)ClCheckMode::_Warn);
 }
 
 static void render_M862_warnings(const char* warning, const char* strict, uint8_t check)
@@ -304,7 +304,7 @@ void nozzle_diameter_check(uint16_t nDiameter) {
 }
 
 void printer_model_check(uint16_t nPrinterModel, uint16_t actualPrinterModel) {
-    if (oCheckModel == ClCheckModel::_None)
+    if (oCheckModel == ClCheckMode::_None)
         return;
     if (nPrinterModel == actualPrinterModel)
         return;
@@ -330,7 +330,7 @@ uint8_t mCompareValue(uint16_t nX, uint16_t nY) {
 }
 
 void fw_version_check(const char *pVersion) {
-    if (oCheckVersion == ClCheckVersion::_None)
+    if (oCheckVersion == ClCheckMode::_None)
         return;
 
     uint16_t aVersion[4];
@@ -374,7 +374,7 @@ void fw_version_check(const char *pVersion) {
 void filament_presence_check() {
     if (fsensor.isEnabled() && !fsensor.getFilamentPresent())
     {
-        if (oCheckFilament == ClCheckFilament::_None)
+        if (oCheckFilament == ClCheckMode::_None)
             return;
 
         render_M862_warnings(
@@ -387,7 +387,7 @@ void filament_presence_check() {
 }
 
 void gcode_level_check(uint16_t nGcodeLevel) {
-    if (oCheckGcode == ClCheckGcode::_None)
+    if (oCheckGcode == ClCheckMode::_None)
         return;
     if (nGcodeLevel <= (uint16_t)GCODE_LEVEL)
         return;

@@ -4233,26 +4233,6 @@ switch(oCheckMode)
 eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODE,(uint8_t)oCheckMode);
 }
 
-#define SETTINGS_MODE \
-do\
-{\
-    switch(oCheckMode)\
-         {\
-         case ClCheckMode::_None:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_NOZZLE), _T(MSG_NONE), lcd_check_mode_set);\
-              break;\
-         case ClCheckMode::_Warn:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_NOZZLE), _T(MSG_WARN), lcd_check_mode_set);\
-              break;\
-         case ClCheckMode::_Strict:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_NOZZLE), _T(MSG_STRICT), lcd_check_mode_set);\
-              break;\
-         default:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_NOZZLE), _T(MSG_NONE), lcd_check_mode_set);\
-         }\
-}\
-while (0)
-
 static void lcd_nozzle_diameter_cycle(void) {
     uint16_t nDiameter;
     switch(oNozzleDiameter){
@@ -4298,127 +4278,83 @@ static void lcd_check_model_set(void)
 {
 switch(oCheckModel)
      {
-     case ClCheckModel::_None:
-          oCheckModel=ClCheckModel::_Warn;
+     case ClCheckMode::_None:
+          oCheckModel=ClCheckMode::_Warn;
           break;
-     case ClCheckModel::_Warn:
-          oCheckModel=ClCheckModel::_Strict;
+     case ClCheckMode::_Warn:
+          oCheckModel=ClCheckMode::_Strict;
           break;
-     case ClCheckModel::_Strict:
-          oCheckModel=ClCheckModel::_None;
+     case ClCheckMode::_Strict:
+          oCheckModel=ClCheckMode::_None;
           break;
      default:
-          oCheckModel=ClCheckModel::_None;
+          oCheckModel=ClCheckMode::_None;
      }
 eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_MODEL,(uint8_t)oCheckModel);
 }
-
-#define SETTINGS_MODEL \
-do\
-{\
-    switch(oCheckModel)\
-         {\
-         case ClCheckModel::_None:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_MODEL), _T(MSG_NONE), lcd_check_model_set);\
-              break;\
-         case ClCheckModel::_Warn:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_MODEL), _T(MSG_WARN), lcd_check_model_set);\
-              break;\
-         case ClCheckModel::_Strict:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_MODEL), _T(MSG_STRICT), lcd_check_model_set);\
-              break;\
-         default:\
-              MENU_ITEM_TOGGLE_P(_T(MSG_MODEL), _T(MSG_NONE), lcd_check_model_set);\
-         }\
-}\
-while (0)
 
 static void lcd_check_version_set(void)
 {
 switch(oCheckVersion)
      {
-     case ClCheckVersion::_None:
-          oCheckVersion=ClCheckVersion::_Warn;
+     case ClCheckMode::_None:
+          oCheckVersion=ClCheckMode::_Warn;
           break;
-     case ClCheckVersion::_Warn:
-          oCheckVersion=ClCheckVersion::_Strict;
+     case ClCheckMode::_Warn:
+          oCheckVersion=ClCheckMode::_Strict;
           break;
-     case ClCheckVersion::_Strict:
-          oCheckVersion=ClCheckVersion::_None;
+     case ClCheckMode::_Strict:
+          oCheckVersion=ClCheckMode::_None;
           break;
      default:
-          oCheckVersion=ClCheckVersion::_None;
+          oCheckVersion=ClCheckMode::_None;
      }
 eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_VERSION,(uint8_t)oCheckVersion);
 }
-
-#define SETTINGS_VERSION \
-do\
-{\
-    switch(oCheckVersion)\
-         {\
-         case ClCheckVersion::_None:\
-              MENU_ITEM_TOGGLE_P(MSG_FIRMWARE, _T(MSG_NONE), lcd_check_version_set);\
-              break;\
-         case ClCheckVersion::_Warn:\
-              MENU_ITEM_TOGGLE_P(MSG_FIRMWARE, _T(MSG_WARN), lcd_check_version_set);\
-              break;\
-         case ClCheckVersion::_Strict:\
-              MENU_ITEM_TOGGLE_P(MSG_FIRMWARE, _T(MSG_STRICT), lcd_check_version_set);\
-              break;\
-         default:\
-              MENU_ITEM_TOGGLE_P(MSG_FIRMWARE, _T(MSG_NONE), lcd_check_version_set);\
-         }\
-}\
-while (0)
 
 static void lcd_check_filament_set(void)
 {
 switch(oCheckFilament)
      {
-     case ClCheckFilament::_None:
-          oCheckFilament=ClCheckFilament::_Warn;
+     case ClCheckMode::_None:
+          oCheckFilament=ClCheckMode::_Warn;
           break;
-     case ClCheckFilament::_Warn:
-          oCheckFilament=ClCheckFilament::_Strict;
+     case ClCheckMode::_Warn:
+          oCheckFilament=ClCheckMode::_Strict;
           break;
-     case ClCheckFilament::_Strict:
-          oCheckFilament=ClCheckFilament::_None;
+     case ClCheckMode::_Strict:
+          oCheckFilament=ClCheckMode::_None;
           break;
      default:
-          oCheckFilament=ClCheckFilament::_None;
+          oCheckFilament=ClCheckMode::_None;
      }
 eeprom_update_byte_notify((uint8_t*)EEPROM_CHECK_FILAMENT,(uint8_t)oCheckFilament);
 }
 
-#define SETTINGS_CHECK_FILAMENT \
-do\
-{\
-    switch(oCheckFilament)\
-         {\
-         case ClCheckFilament::_None:\
-              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_NONE), lcd_check_filament_set);\
-              break;\
-         case ClCheckFilament::_Warn:\
-              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_WARN), lcd_check_filament_set);\
-              break;\
-         case ClCheckFilament::_Strict:\
-              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_STRICT), lcd_check_filament_set);\
-              break;\
-         default:\
-              MENU_ITEM_TOGGLE_P(MSG_FILAMENT, _T(MSG_NONE), lcd_check_filament_set);\
-         }\
-}\
-while (0)
+static void settings_check_toggle(ClCheckMode oCheckSetting, const char* msg, void (*func)(void)) {
+    switch(oCheckSetting) {
+        case ClCheckMode::_None:
+            MENU_ITEM_TOGGLE_P(msg, _T(MSG_NONE), func);
+            break;
+        case ClCheckMode::_Warn:
+            MENU_ITEM_TOGGLE_P(msg, _T(MSG_WARN), func);
+            break;
+        case ClCheckMode::_Strict:
+            MENU_ITEM_TOGGLE_P(msg, _T(MSG_STRICT), func);
+            break;
+        default:
+            MENU_ITEM_TOGGLE_P(msg, _T(MSG_NONE), func);
+    }
+}
 
 static void lcd_checking_menu(void)
 {
     MENU_BEGIN();
     MENU_ITEM_BACK_P(_T(MSG_HW_SETUP));
-    SETTINGS_MODE;
-    SETTINGS_MODEL;
-    SETTINGS_VERSION;
-    SETTINGS_CHECK_FILAMENT;
+    settings_check_toggle(oCheckMode, _T(MSG_NOZZLE), lcd_check_mode_set);
+    settings_check_toggle(oCheckModel, _T(MSG_MODEL), lcd_check_model_set);
+    settings_check_toggle(oCheckVersion, MSG_FIRMWARE, lcd_check_version_set);
+    settings_check_toggle(oCheckFilament, MSG_FILAMENT, lcd_check_filament_set);
     MENU_END();
 }
 
