@@ -371,19 +371,32 @@ void fw_version_check(const char *pVersion) {
     );
 }
 
-void filament_presence_check() {
-    if (fsensor.isEnabled() && !fsensor.getFilamentPresent())
-    {
-        if (oCheckFilament == ClCheckMode::_None)
-            return;
+bool filament_presence_check() {
+    // When MMU is enabled, this is not necessary and the G-code file
+    // should always tell the MMU which filament to load.
+    if (MMU2::mmu2.Enabled()) {
+        goto done;
+    }
+
+    if (fsensor.isEnabled() && !fsensor.getFilamentPresent()) {
+        if (oCheckFilament == ClCheckMode::_None) {
+            goto done;
+        }
 
         render_M862_warnings(
             _T(MSG_MISSING_FILAMENT_CONTINUE)
             ,_T(MSG_MISSING_FILAMENT_CANCELLED)
             ,(uint8_t)oCheckFilament
         );
+
+        if (lcd_commands_type == LcdCommands::StopPrint) {
+            // Print job was canceled
+            return false;
+        }
     }
-    
+
+done:
+    return true;
 }
 
 void gcode_level_check(uint16_t nGcodeLevel) {

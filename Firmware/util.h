@@ -115,8 +115,21 @@ void nozzle_diameter_check(uint16_t nDiameter);
 void printer_model_check(uint16_t nPrinterModel, uint16_t actualPrinterModel);
 void printer_smodel_check(const char *pStrPos, const char *actualPrinterSModel);
 void fw_version_check(const char *pVersion);
-void filament_presence_check();
 void gcode_level_check(uint16_t nGcodeLevel);
+
+/// Check if the filament is present before starting a print job.
+/// Depending on the check level set in the menus the printer will:
+///   - None: not issue any warning about missing filament
+///   - Warning (default): The user is warned about missing filament
+///     and is prompted to continue with Yes/No. If No is selected,
+///     the print is aborted. If no user input is given (e.g. from
+///     host printing) then the warning will expire in 30 seconds and
+///     the printer assumes the Yes option was selected.
+///   - Strict: If the filament is not detected when a print is started,
+///     it is immediately canceled with a message saying the filament is
+///     missing.
+/// @returns false if the print is canceled, true otherwise
+bool filament_presence_check();
 
 uint16_t nPrinterType(bool bMMu);
 const char *sPrinterType(bool bMMu);

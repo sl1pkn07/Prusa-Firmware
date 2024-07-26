@@ -5224,17 +5224,10 @@ void process_commands()
       lcd_resume_print();
     else
     {
-        if (!MMU2::mmu2.Enabled()) {
-            // Check if the filament is present before starting a print.
-            // When MMU is enabled, this is not necessary and the G-code file
-            // should always tell the MMU which filament to load.
-            filament_presence_check();
-
-            if (lcd_commands_type == LcdCommands::StopPrint) {
-                // Print job was canceled
-                break;
-            }
-        }
+      if (!filament_presence_check()) {
+        // Print was aborted
+        break;
+      }
 
       if (!card.get_sdpos())
       {
@@ -5866,16 +5859,9 @@ Sigma_Exit:
     */
     case 75:
     {
-        if (!MMU2::mmu2.Enabled()) {
-            // Check if the filament is present before starting a host print.
-            // When MMU is enabled, this is not necessary and the G-code file
-            // should always tell the MMU which filament to load.
-            filament_presence_check();
-
-            if (lcd_commands_type == LcdCommands::StopPrint) {
-                // Print job was canceled
-                break;
-            }
+        if (!filament_presence_check()) {
+          // Print was aborted
+          break;
         }
 
         print_job_timer.start();
