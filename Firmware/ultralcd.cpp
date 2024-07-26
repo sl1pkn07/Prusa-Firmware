@@ -1813,61 +1813,59 @@ void lcd_print_target_temps_first_line() {
     }
 }
 
-static void mFilamentPrompt()
-{
+static void mFilamentPrompt() {
     lcd_timeoutToStatus.stop();
-lcd_print_target_temps_first_line();
-lcd_puts_at_P(0,1, _T(MSG_PRESS_KNOB));
-lcd_set_cursor(0,2);
-switch(eFilamentAction)
-     {
-     case FilamentAction::Load:
-     case FilamentAction::AutoLoad:
-     case FilamentAction::MmuLoad:
-     case FilamentAction::MmuLoadingTest:
-          lcd_puts_P(_T(MSG_TO_LOAD_FIL));
-          break;
-     case FilamentAction::UnLoad:
-     case FilamentAction::MmuUnLoad:
-          lcd_puts_P(_T(MSG_TO_UNLOAD_FIL));
-          break;
-     case FilamentAction::MmuEject:
-     case FilamentAction::MmuCut:
-     case FilamentAction::None:
-     case FilamentAction::Preheat:
-     case FilamentAction::Lay1Cal:
-          break;
-     }
+    lcd_print_target_temps_first_line();
+    lcd_puts_at_P(0,1, _T(MSG_PRESS_KNOB));
+    lcd_set_cursor(0,2);
+    switch(eFilamentAction) {
+        case FilamentAction::Load:
+        case FilamentAction::AutoLoad:
+        case FilamentAction::MmuLoad:
+        case FilamentAction::MmuLoadingTest:
+            lcd_puts_P(_T(MSG_TO_LOAD_FIL));
+            break;
+        case FilamentAction::UnLoad:
+        case FilamentAction::MmuUnLoad:
+            lcd_puts_P(_T(MSG_TO_UNLOAD_FIL));
+            break;
+        case FilamentAction::MmuEject:
+        case FilamentAction::MmuCut:
+        case FilamentAction::None:
+        case FilamentAction::Preheat:
+        case FilamentAction::Lay1Cal:
+            break;
+    }
+
     if(lcd_clicked()
 #ifdef FILAMENT_SENSOR
 /// @todo leptun - add this as a specific retest item
         || (((eFilamentAction == FilamentAction::Load) || (eFilamentAction == FilamentAction::AutoLoad)) && fsensor.getFilamentLoadEvent())
 #endif //FILAMENT_SENSOR
     ) {
-     menu_back(bFilamentPreheatState ? 2 : 3);
-     switch(eFilamentAction)
-          {
-          case FilamentAction::AutoLoad:
-               // loading no longer cancellable
-               eFilamentAction = FilamentAction::Load;
-               // FALLTHRU
-          case FilamentAction::Load:
-               enquecommand_P(MSG_M701);      // load filament
-               break;
-          case FilamentAction::UnLoad:
-               enquecommand_P(MSG_M702);      // unload filament
-               break;
-          case FilamentAction::MmuLoad:
-          case FilamentAction::MmuLoadingTest:
-          case FilamentAction::MmuUnLoad:
-          case FilamentAction::MmuEject:
-          case FilamentAction::MmuCut:
-          case FilamentAction::None:
-          case FilamentAction::Preheat:
-          case FilamentAction::Lay1Cal:
-               break;
-          }
-     }
+        menu_back(bFilamentPreheatState ? 2 : 3);
+        switch(eFilamentAction) {
+            case FilamentAction::AutoLoad:
+                // loading no longer cancellable
+                eFilamentAction = FilamentAction::Load;
+                [[fallthrough]];
+            case FilamentAction::Load:
+                enquecommand_P(MSG_M701);      // load filament
+                break;
+            case FilamentAction::UnLoad:
+                enquecommand_P(MSG_M702);      // unload filament
+                break;
+            case FilamentAction::MmuLoad:
+            case FilamentAction::MmuLoadingTest:
+            case FilamentAction::MmuUnLoad:
+            case FilamentAction::MmuEject:
+            case FilamentAction::MmuCut:
+            case FilamentAction::None:
+            case FilamentAction::Preheat:
+            case FilamentAction::Lay1Cal:
+                break;
+        }
+    }
 }
 
 static void setFilamentAction(FilamentAction action) {
