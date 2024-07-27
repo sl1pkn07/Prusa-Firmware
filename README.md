@@ -35,7 +35,7 @@ The workflow should be pretty straightforward for anyone with development experi
 Building with cmake requires:
 
 - cmake >= 3.22.5
-- ninja >= 1.10.2 (optional, but recommended)
+- ninja >= 1.12.1 (optional, but recommended)
 
 Python >= 3.8 is also required with the following modules:
 
