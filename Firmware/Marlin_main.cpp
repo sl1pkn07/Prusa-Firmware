@@ -172,8 +172,6 @@ bool did_pause_print;
 LongTimer safetyTimer;
 static LongTimer crashDetTimer;
 
-//unsigned long load_filament_time;
-
 bool mesh_bed_leveling_flag = false;
 
 uint32_t total_filament_used; // unit mm/100 or 10um
@@ -11314,7 +11312,6 @@ void M600_load_filament() {
 	//load filament for single material and MMU
 	lcd_wait_interact();
 
-	//load_filament_time = _millis();
 	KEEPALIVE_STATE(PAUSED_FOR_USER);
 
 	while(!lcd_clicked())
