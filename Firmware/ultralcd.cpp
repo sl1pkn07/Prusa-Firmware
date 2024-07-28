@@ -984,10 +984,7 @@ void lcd_commands()
                 break;
             case 3:
 #ifndef QUICK_NOZZLE_CHANGE
-                lcd_update_enabled = false; //hack to avoid lcd_update recursion.
                 lcd_show_fullscreen_message_and_wait_P(_T(MSG_NOZZLE_CNG_READ_HELP));
-                lcd_update_enabled = true;
-                lcd_draw_update = 2; //force lcd clear and update after the stack unwinds.
                 enquecommand_P(G28W);
                 enquecommand_P(PSTR("G1 X125 Z200 F1000"));
                 enquecommand_P(PSTR("M109 S280"));
@@ -1000,14 +997,9 @@ void lcd_commands()
                     fanSpeed = 255; //turn on fan
                     disable_heater();
                     uint8_t choice = lcd_show_multiscreen_message_yes_no_and_wait_P(_T(MSG_NOZZLE_CNG_COOLDOWN), true, LCD_LEFT_BUTTON_CHOICE);
-                    lcd_update_enabled = false; //hack to avoid lcd_update recursion.
                     if (choice == LCD_MIDDLE_BUTTON_CHOICE) {
-                        lcd_update_enabled = true;
-                        lcd_draw_update = 2; //force lcd clear and update after the stack unwinds.
                         break;
                     }
-                    lcd_update_enabled = true;
-                    lcd_draw_update = 2; //force lcd clear and update after the stack unwinds.
                 }
                 enquecommand_P(G28W); //home
                 enquecommand_P(PSTR("G1 X125 Z200 F1000")); //move to top center
@@ -1016,7 +1008,6 @@ void lcd_commands()
                 break;
             case 2:
                 enquecommand_P(PSTR("M84 XY"));
-                lcd_update_enabled = false; //hack to avoid lcd_update recursion.
                 if (lcd_show_multiscreen_message_yes_no_and_wait_P(_T(MSG_NOZZLE_CNG_CHANGED), false) == LCD_LEFT_BUTTON_CHOICE) {
 #ifndef QUICK_NOZZLE_CHANGE
                     setTargetHotend(0);
@@ -1028,7 +1019,6 @@ void lcd_commands()
 #endif //QUICK_NOZZLE_CHANGE
                     lcd_commands_step = 1;
                 }
-                lcd_update_enabled = true;
                 break;
             case 1:
                 lcd_commands_step = 0;
