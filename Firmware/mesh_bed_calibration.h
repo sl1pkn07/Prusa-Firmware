@@ -163,7 +163,7 @@ float BED_Y(const uint8_t row);
  * Negative: failed
  */
 
-enum BedSkewOffsetDetectionResultType {
+enum BedSkewOffsetDetectionResultType : int8_t {
 	// Detection failed, some point was not found.
 	BED_SKEW_OFFSET_DETECTION_POINT_FOUND       =  0, //!< Point found
 	BED_SKEW_OFFSET_DETECTION_POINT_NOT_FOUND   = -1, //!< Point not found.
