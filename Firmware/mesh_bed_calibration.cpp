@@ -1185,8 +1185,6 @@ BedSkewOffsetDetectionResultType find_bed_induction_sensor_point_xy(int
 			MYSERIAL.println(current_position[Z_AXIS]);
 		}
 		#endif //SUPPORT_VERBOSITY
-		//lcd_show_fullscreen_message_and_wait_P(PSTR("First hit"));
-		//lcd_update_enable(true);
 
 		float init_x_position = current_position[X_AXIS];
 		float init_y_position = current_position[Y_AXIS];
