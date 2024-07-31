@@ -111,18 +111,18 @@ extern void lcd_buttons_update(void);
 //! When constructed (on stack), original state state of lcd_update_enabled is stored
 //! and LCD updates are disabled.
 //! When destroyed (gone out of scope), original state of LCD update is restored.
-//! It has zero overhead compared to storing bool saved = lcd_update_enabled
-//! and calling lcd_update_enable(false) and lcd_update_enable(saved).
+//! Do not call lcd_update_enable() to prevent calling lcd_update() in sensitive code.
+//! in certain scenarios it will cause recursion e.g. in the menus.
 class LcdUpdateDisabler
 {
 public:
     LcdUpdateDisabler(): m_updateEnabled(lcd_update_enabled)
     {
-        lcd_update_enable(false);
+        lcd_update_enabled = false;
     }
     ~LcdUpdateDisabler()
     {
-        lcd_update_enable(m_updateEnabled);
+        lcd_update_enabled = m_updateEnabled;
     }
 
 private:
