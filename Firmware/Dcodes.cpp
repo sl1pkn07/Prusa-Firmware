@@ -191,13 +191,6 @@ void dcode_3()
 #include <avr/wdt.h>
 #include "bootapp.h"
 
-#if 0
-extern float current_temperature_pinda;
-extern float axis_steps_per_mm[NUM_AXIS];
-
-
-#define LOG(args...) printf(args)
-#endif //0
 #define LOG(args...)
 
     /*!

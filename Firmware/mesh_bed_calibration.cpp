@@ -499,19 +499,6 @@ BedSkewOffsetDetectionResultType calculate_machine_skew_and_offset_LS(
 	}
 	#endif // SUPPORT_VERBOSITY
 
-    #if 0
-    if (result == BED_SKEW_OFFSET_DETECTION_PERFECT && fabs(a1) < bed_skew_angle_mild && fabs(a2) < bed_skew_angle_mild) {
-		#ifdef SUPPORT_VERBOSITY
-		if (verbosity_level > 0)
-            SERIAL_ECHOLNPGM("Very little skew detected. Disabling skew correction.");
-		#endif // SUPPORT_VERBOSITY
-        // Just disable the skew correction.
-        vec_x[0] = MACHINE_AXIS_SCALE_X;
-        vec_x[1] = 0.f;
-        vec_y[0] = 0.f;
-        vec_y[1] = MACHINE_AXIS_SCALE_Y;
-    }
-    #else
     if (result == BED_SKEW_OFFSET_DETECTION_PERFECT) {
 		#ifdef SUPPORT_VERBOSITY
 		if (verbosity_level > 0)
@@ -583,7 +570,6 @@ BedSkewOffsetDetectionResultType calculate_machine_skew_and_offset_LS(
 		}
 		#endif // SUPPORT_VERBOSITY
     }
-    #endif
 
     // Invert the transformation matrix made of vec_x, vec_y and cntr.
     {
@@ -3101,11 +3087,7 @@ void count_xyz_details(float (&distanceMin)[2]) {
 	eeprom_read_block(&cntr[0], (float*)(EEPROM_BED_CALIBRATION_CENTER), 8);
 	eeprom_read_block(&vec_x[0], (float*)(EEPROM_BED_CALIBRATION_VEC_X), 8);
 	eeprom_read_block(&vec_y[0], (float*)(EEPROM_BED_CALIBRATION_VEC_Y), 8);
-#if 0
-	a2 = -1 * asin(vec_y[0] / MACHINE_AXIS_SCALE_Y);
-	a1 = asin(vec_x[1] / MACHINE_AXIS_SCALE_X);
-	angleDiff = fabs(a2 - a1);
-#endif
+
 	for (uint8_t mesh_point = 0; mesh_point < 2; ++mesh_point) {
 		float y = vec_x[1] * pgm_read_float(bed_ref_points_4 + mesh_point * 2) + vec_y[1] * pgm_read_float(bed_ref_points_4 + mesh_point * 2 + 1) + cntr[1];
 		distanceMin[mesh_point] = (y - Y_MIN_POS_CALIBRATION_POINT_OUT_OF_REACH);

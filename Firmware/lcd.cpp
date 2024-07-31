@@ -95,21 +95,6 @@ static const CustomCharacter Font[] PROGMEM = {
 #define CUSTOM_CHARACTERS_CNT (sizeof(Font) / sizeof(Font[0]))
 
 static void lcd_display(void);
-
-#if 0
-static void lcd_no_display(void);
-static void lcd_no_cursor(void);
-static void lcd_cursor(void);
-static void lcd_no_blink(void);
-static void lcd_blink(void);
-static void lcd_scrollDisplayLeft(void);
-static void lcd_scrollDisplayRight(void);
-static void lcd_leftToRight(void);
-static void lcd_rightToLeft(void);
-static void lcd_autoscroll(void);
-static void lcd_no_autoscroll(void);
-#endif
-
 static void lcd_print_custom(uint8_t c);
 static void lcd_invalidate_custom_characters();
 
@@ -278,14 +263,6 @@ void lcd_display(void)
     lcd_command(LCD_DISPLAYCONTROL | lcd_displaycontrol);
 }
 
-#if 0
-void lcd_no_display(void)
-{
-	lcd_displaycontrol &= ~LCD_DISPLAYON;
-	lcd_command(LCD_DISPLAYCONTROL | lcd_displaycontrol);
-}
-#endif
-
 #ifdef VT100 //required functions for VT100
 // Turns the underline cursor on/off
 void lcd_no_cursor(void)
@@ -298,60 +275,6 @@ void lcd_cursor(void)
 {
 	lcd_displaycontrol |= LCD_CURSORON;
 	lcd_command(LCD_DISPLAYCONTROL | lcd_displaycontrol);
-}
-#endif
-
-#if 0
-// Turn on and off the blinking cursor
-void lcd_no_blink(void)
-{
-	lcd_displaycontrol &= ~LCD_BLINKON;
-	lcd_command(LCD_DISPLAYCONTROL | lcd_displaycontrol);
-}
-
-void lcd_blink(void)
-{
-	lcd_displaycontrol |= LCD_BLINKON;
-	lcd_command(LCD_DISPLAYCONTROL | lcd_displaycontrol);
-}
-
-// These commands scroll the display without changing the RAM
-void lcd_scrollDisplayLeft(void)
-{
-	lcd_command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT);
-}
-
-void lcd_scrollDisplayRight(void)
-{
-	lcd_command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT);
-}
-
-// This is for text that flows Left to Right
-void lcd_leftToRight(void)
-{
-	lcd_displaymode |= LCD_ENTRYLEFT;
-	lcd_command(LCD_ENTRYMODESET | lcd_displaymode);
-}
-
-// This is for text that flows Right to Left
-void lcd_rightToLeft(void)
-{
-	lcd_displaymode &= ~LCD_ENTRYLEFT;
-	lcd_command(LCD_ENTRYMODESET | lcd_displaymode);
-}
-
-// This will 'right justify' text from the cursor
-void lcd_autoscroll(void)
-{
-	lcd_displaymode |= LCD_ENTRYSHIFTINCREMENT;
-	lcd_command(LCD_ENTRYMODESET | lcd_displaymode);
-}
-
-// This will 'left justify' text from the cursor
-void lcd_no_autoscroll(void)
-{
-	lcd_displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
-	lcd_command(LCD_ENTRYMODESET | lcd_displaymode);
 }
 #endif
 

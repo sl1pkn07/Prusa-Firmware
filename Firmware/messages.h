@@ -372,9 +372,6 @@ extern const char MSG_NEW_FIRMWARE_PLEASE_UPGRADE [];
 extern const char MSG_FW_MK3_DETECTED [];
 
 //not internationalized messages
-#if 0
-extern const char MSG_FW_VERSION_BETA[];
-#endif
 extern const char MSG_SPOOL_JOIN[];
 extern const char MSG_FIRMWARE[];
 extern const char MSG_TOSHIBA_FLASH_AIR_COMPATIBILITY[];

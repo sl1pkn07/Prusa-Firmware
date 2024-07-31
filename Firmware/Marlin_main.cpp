@@ -885,31 +885,6 @@ void factory_reset()
 	}
 	KEEPALIVE_STATE(IN_HANDLER);
 }
-#if 0
-void show_fw_version_warnings() {
-	if (FW_DEV_VERSION == FW_VERSION_GOLD || FW_DEV_VERSION == FW_VERSION_RC) return;
-	switch (FW_DEV_VERSION) {
-	case(FW_VERSION_BETA):    lcd_show_fullscreen_message_and_wait_P(MSG_FW_VERSION_BETA);   break;
-	case(FW_VERSION_ALPHA):
-  case(FW_VERSION_DEVEL):
-	case(FW_VERSION_DEBUG):
-    lcd_update_enable(false);
-    lcd_clear();
-  #if (FW_DEV_VERSION == FW_VERSION_DEVEL || FW_DEV_VERSION == FW_VERSION_ALPHA)
-    lcd_puts_at_P(0, 0, PSTR("Development build !!"));
-  #else
-    lcd_puts_at_P(0, 0, PSTR("Debbugging build !!!"));
-  #endif
-    lcd_puts_at_P(0, 1, PSTR("May destroy printer!"));
-    lcd_puts_at_P(0, 2, PSTR("FW")); lcd_puts_P(PSTR(FW_VERSION_FULL));
-    lcd_puts_at_P(0, 3, PSTR("Repo: ")); lcd_puts_P(PSTR(FW_REPOSITORY));
-    lcd_wait_for_click();
-    break;
-//	default: lcd_show_fullscreen_message_and_wait_P(_i("WARNING: This is an unofficial, unsupported build. Use at your own risk!")); break;////MSG_FW_VERSION_UNKNOWN c=20 r=8
-	}
-	lcd_update_enable(true);
-}
-#endif
 
 #if defined(FILAMENT_SENSOR) && defined(FSENSOR_PROBING)
 //! @brief try to check if firmware is on right type of printer
@@ -1380,10 +1355,6 @@ void setup()
 
 	setup_photpin();
 
-#if 0
-	servo_init();
-#endif
-
 	// Reset the machine correction matrix.
 	// It does not make sense to load the correction matrix until the machine is homed.
 	world2machine_reset();
@@ -1532,9 +1503,6 @@ void setup()
 #if defined(FILAMENT_SENSOR) && defined(FSENSOR_PROBING)
     check_if_fw_is_on_right_printer();
 #endif //defined(FILAMENT_SENSOR) && defined(FSENSOR_PROBING)
-#if 0
-    show_fw_version_warnings();
-#endif
   }
 
   switch (hw_changed) {
@@ -5034,66 +5002,6 @@ void process_commands()
             gcode_G81_M420();
         }
     break;
-#if 0
-        /*!
-        ### G82: Single Z probe at current location - Not active <a href="https://reprap.org/wiki/G-code#G82:_Single_Z_probe_at_current_location">G82: Single Z probe at current location</a>
-
-        WARNING! USE WITH CAUTION! If you'll try to probe where is no leveling pad, nasty things can happen!
-        In Prusa Firmware this G-code is deactivated by default, must be turned on in the source code.
-        */
-        case 82:
-            SERIAL_PROTOCOLLNPGM("Finding bed ");
-            int l_feedmultiply = setup_for_endstop_move();
-            find_bed_induction_sensor_point_z();
-            clean_up_after_endstop_move(l_feedmultiply);
-            SERIAL_PROTOCOLPGM("Bed found at: ");
-            SERIAL_PROTOCOL_F(current_position[Z_AXIS], 5);
-            SERIAL_PROTOCOLPGM("\n");
-            break;
-
-        /*!
-        ### G83: Babystep in Z and store to EEPROM - Not active <a href="https://reprap.org/wiki/G-code#G83:_Babystep_in_Z_and_store_to_EEPROM">G83: Babystep in Z and store to EEPROM</a>
-        In Prusa Firmware this G-code is deactivated by default, must be turned on in the source code.
-        */
-        case 83:
-        {
-            int babystepz = code_seen('S') ? code_value() : 0;
-            int BabyPosition = code_seen('P') ? code_value() : 0;
-
-            if (babystepz != 0) {
-                //FIXME Vojtech: What shall be the index of the axis Z: 3 or 4?
-                // Is the axis indexed starting with zero or one?
-                if (BabyPosition > 4) {
-                    SERIAL_PROTOCOLLNPGM("Index out of bounds");
-                }else{
-                    // Save it to the eeprom
-                    babystepLoadZ = babystepz;
-                    eeprom_update_word_notify((uint16_t*)EEPROM_BABYSTEP_Z0 + BabyPosition, babystepLoadZ);
-                    // adjust the Z
-                    babystepsTodoZadd(babystepLoadZ);
-                }
-
-            }
-
-        }
-        break;
-        /*!
-        ### G84: UNDO Babystep Z (move Z axis back) - Not active <a href="https://reprap.org/wiki/G-code#G84:_UNDO_Babystep_Z_.28move_Z_axis_back.29">G84: UNDO Babystep Z (move Z axis back)</a>
-        In Prusa Firmware this G-code is deactivated by default, must be turned on in the source code.
-        */
-        case 84:
-            babystepsTodoZsubtract(babystepLoadZ);
-            // babystepLoadZ = 0;
-            break;
-
-        /*!
-        ### G85: Pick best babystep - Not active <a href="https://reprap.org/wiki/G-code#G85:_Pick_best_babystep">G85: Pick best babystep</a>
-        In Prusa Firmware this G-code is deactivated by default, must be turned on in the source code.
-        */
-        case 85:
-            lcd_pick_babystep();
-            break;
-#endif
 
         /*!
         ### G86 - Disable babystep correction after home <a href="https://reprap.org/wiki/G-code#G86:_Disable_babystep_correction_after_home">G86: Disable babystep correction after home</a>
@@ -5636,42 +5544,6 @@ void process_commands()
 		KEEPALIVE_STATE(IN_HANDLER);
         break;
 #endif //!TMC2130
-#if 0
-    case 48: // M48: scan the bed induction sensor points, print the sensor trigger coordinates to the serial line for visualization on the PC.
-    {
-        // Disable the default update procedure of the display. We will do a modal dialog.
-        lcd_update_enable(false);
-        // Let the planner use the uncorrected coordinates.
-        mbl.reset();
-        // Reset world2machine_rotation_and_skew and world2machine_shift, therefore
-        // the planner will not perform any adjustments in the XY plane.
-        // Wait for the motors to stop and update the current position with the absolute values.
-        world2machine_revert_to_uncorrected();
-        // Move the print head close to the bed.
-        current_position[Z_AXIS] = MESH_HOME_Z_SEARCH;
-        plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS],current_position[Z_AXIS] , current_position[E_AXIS], homing_feedrate[Z_AXIS]/40);
-        st_synchronize();
-        // Home in the XY plane.
-        set_destination_to_current();
-        int l_feedmultiply = setup_for_endstop_move();
-        home_xy();
-        int8_t verbosity_level = 0;
-        if (code_seen('V')) {
-            // Just 'V' without a number counts as V1.
-            char c = strchr_pointer[1];
-            verbosity_level = (c == ' ' || c == '\t' || c == 0) ? 1 : code_value_short();
-        }
-        bool success = scan_bed_induction_points(verbosity_level);
-        clean_up_after_endstop_move(l_feedmultiply);
-        // Print head up.
-        current_position[Z_AXIS] = MESH_HOME_Z_SEARCH;
-        plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS],current_position[Z_AXIS] , current_position[E_AXIS], homing_feedrate[Z_AXIS]/40);
-        st_synchronize();
-        lcd_update_enable(true);
-        break;
-    }
-#endif
-
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 #ifdef Z_PROBE_REPEATABILITY_TEST
@@ -10791,94 +10663,6 @@ void save_print_file_state() {
         saved_printing_type = PowerPanic::PRINT_TYPE_NONE;
         //not sd printing nor usb printing
     }
-
-#if 0
-  SERIAL_ECHOPGM("SDPOS_ATOMIC="); MYSERIAL.println(sdpos_atomic, DEC);
-  SERIAL_ECHOPGM("SDPOS="); MYSERIAL.println(card.get_sdpos(), DEC);
-  SERIAL_ECHOPGM("SDLEN_PLAN="); MYSERIAL.println(sdlen_planner, DEC);
-  SERIAL_ECHOPGM("SDLEN_CMDQ="); MYSERIAL.println(sdlen_cmdqueue, DEC);
-  SERIAL_ECHOPGM("PLANNERBLOCKS="); MYSERIAL.println(int(moves_planned()), DEC);
-  SERIAL_ECHOPGM("SDSAVED="); MYSERIAL.println(saved_sdpos, DEC);
-  //SERIAL_ECHOPGM("SDFILELEN="); MYSERIAL.println(card.fileSize(), DEC);
-
-
-  {
-    card.setIndex(saved_sdpos);
-    SERIAL_ECHOLNPGM("Content of planner buffer: ");
-    for (unsigned int idx = 0; idx < sdlen_planner; ++ idx)
-      MYSERIAL.print(char(card.get()));
-    SERIAL_ECHOLNPGM("Content of command buffer: ");
-    for (unsigned int idx = 0; idx < sdlen_cmdqueue; ++ idx)
-      MYSERIAL.print(char(card.get()));
-    SERIAL_ECHOLNPGM("End of command buffer");
-  }
-  {
-    // Print the content of the planner buffer, line by line:
-    card.setIndex(saved_sdpos);
-    int8_t iline = 0;
-    for (unsigned char idx = block_buffer_tail; idx != block_buffer_head; idx = (idx + 1) & (BLOCK_BUFFER_SIZE - 1), ++ iline) {
-      SERIAL_ECHOPGM("Planner line (from file): ");
-      MYSERIAL.print(int(iline), DEC);
-      SERIAL_ECHOPGM(", length: ");
-      MYSERIAL.print(block_buffer[idx].sdlen, DEC);
-      SERIAL_ECHOPGM(", steps: (");
-      MYSERIAL.print(block_buffer[idx].steps_x, DEC);
-      SERIAL_ECHOPGM(",");
-      MYSERIAL.print(block_buffer[idx].steps_y, DEC);
-      SERIAL_ECHOPGM(",");
-      MYSERIAL.print(block_buffer[idx].steps_z, DEC);
-      SERIAL_ECHOPGM(",");
-      MYSERIAL.print(block_buffer[idx].steps_e, DEC);
-      SERIAL_ECHOPGM("), events: ");
-      MYSERIAL.println(block_buffer[idx].step_event_count, DEC);
-      for (int len = block_buffer[idx].sdlen; len > 0; -- len)
-        MYSERIAL.print(char(card.get()));
-    }
-  }
-  {
-    // Print the content of the command buffer, line by line:
-    int8_t iline = 0;
-    union {
-        struct {
-            char lo;
-            char hi;
-        } lohi;
-        uint16_t value;
-    } sdlen_single;
-    int _bufindr = bufindr;
-	for (int _buflen  = buflen; _buflen > 0; ++ iline) {
-        if (cmdbuffer[_bufindr] == CMDBUFFER_CURRENT_TYPE_SDCARD) {
-            sdlen_single.lohi.lo = cmdbuffer[_bufindr + 1];
-            sdlen_single.lohi.hi = cmdbuffer[_bufindr + 2];
-        }
-        SERIAL_ECHOPGM("Buffer line (from buffer): ");
-        MYSERIAL.print(int(iline), DEC);
-        SERIAL_ECHOPGM(", type: ");
-        MYSERIAL.print(int(cmdbuffer[_bufindr]), DEC);
-        SERIAL_ECHOPGM(", len: ");
-        MYSERIAL.println(sdlen_single.value, DEC);
-        // Print the content of the buffer line.
-        MYSERIAL.println(cmdbuffer + _bufindr + CMDHDRSIZE);
-
-        SERIAL_ECHOPGM("Buffer line (from file): ");
-        MYSERIAL.println(int(iline), DEC);
-        for (; sdlen_single.value > 0; -- sdlen_single.value)
-          MYSERIAL.print(char(card.get()));
-
-        if (-- _buflen == 0)
-          break;
-        // First skip the current command ID and iterate up to the end of the string.
-        for (_bufindr += CMDHDRSIZE; cmdbuffer[_bufindr] != 0; ++ _bufindr) ;
-        // Second, skip the end of string null character and iterate until a nonzero command ID is found.
-        for (++ _bufindr; _bufindr < sizeof(cmdbuffer) && cmdbuffer[_bufindr] == 0; ++ _bufindr) ;
-        // If the end of the buffer was empty,
-        if (_bufindr == sizeof(cmdbuffer)) {
-            // skip to the start and find the nonzero command.
-            for (_bufindr = 0; cmdbuffer[_bufindr] == 0; ++ _bufindr) ;
-        }
-    }
-  }
-#endif
 }
 
 void restore_print_file_state() {

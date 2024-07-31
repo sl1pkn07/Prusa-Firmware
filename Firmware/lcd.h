@@ -22,19 +22,6 @@ extern void lcd_clear(void);
 
 extern void lcd_home(void);
 
-/*extern void lcd_no_display(void);
-extern void lcd_display(void);
-extern void lcd_no_blink(void);
-extern void lcd_blink(void);
-extern void lcd_no_cursor(void);
-extern void lcd_cursor(void);
-extern void lcd_scrollDisplayLeft(void);
-extern void lcd_scrollDisplayRight(void);
-extern void lcd_leftToRight(void);
-extern void lcd_rightToLeft(void);
-extern void lcd_autoscroll(void);
-extern void lcd_no_autoscroll(void);*/
-
 extern void lcd_set_cursor(uint8_t col, uint8_t row);
 
 /// @brief Change the cursor column position while preserving the current row position
