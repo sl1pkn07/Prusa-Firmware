@@ -377,7 +377,6 @@ extern const char MSG_FIRMWARE[];
 extern const char MSG_TOSHIBA_FLASH_AIR_COMPATIBILITY[];
 extern const char MSG_PINDA[];
 extern const char MSG_WELCOME[];
-extern const char MSG_SD_WORKDIR_FAIL[];
 extern const char MSG_BROWNOUT_RESET[];
 extern const char MSG_EXTERNAL_RESET[];
 extern const char MSG_FILE_SAVED[];
@@ -393,7 +392,6 @@ extern const char MSG_ZPROBE_ZOFFSET[];
 #endif
 extern const char MSG_TMC_OVERTEMP[];
 extern const char MSG_Enqueing[];
-extern const char MSG_ENDSTOPS_HIT[];
 extern const char MSG_SD_ERR_WRITE_TO_FILE[];
 extern const char MSG_OK[];
 extern const char MSG_OK_CAPS[];
