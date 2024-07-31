@@ -358,13 +358,6 @@ your extruder heater takes 2 minutes to hit the target on heating.
   //#define Z_PROBE_SLED // turn on if you have a z-probe mounted on a sled like those designed by Charles Bell
   //#define SLED_DOCKING_OFFSET 5 // the extra distance the X axis must travel to pickup the sled. 0 should be fine but you can push it further if you'd like.
 
-  //If defined, the Probe servo will be turned on only during movement and then turned off to avoid jerk
-  //The value is the delay to turn the servo off after powered on - depends on the servo speed; 300ms is good value, but you can try lower it.
-  // You MUST HAVE the SERVO_ENDSTOPS defined to use here a value higher than zero otherwise your code will not compile.
-
-//  #define PROBE_SERVO_DEACTIVATION_DELAY 300
-
-
 //If you have enabled the Bed Auto Leveling and are using the same Z Probe for Z Homing,
 //it is highly recommended you let this Z_SAFE_HOMING enabled!
 
@@ -488,20 +481,6 @@ your extruder heater takes 2 minutes to hit the target on heating.
 
 //define BlinkM/CyzRgb Support
 //#define BLINKM
-
-/*********************************************************************\
-* R/C SERVO support
-* Sponsored by TrinityLabs, Reworked by codexmas
-**********************************************************************/
-
-// Number of servos
-//
-// If you select a configuration below, this will receive a default value and does not need to be set manually
-// set it manually if you have more servos than extruders and wish to manually control some
-// leaving it undefined or defining as 0 will disable the servo subsystem
-// If unsure, leave commented / disabled
-//
-//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
 
 #define DEFAULT_NOMINAL_FILAMENT_DIA  1.75  //Enter the diameter (in mm) of the filament generally used (3.0 mm or 1.75 mm). Used by the volumetric extrusion.
 

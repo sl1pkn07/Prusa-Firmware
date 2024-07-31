@@ -115,10 +115,6 @@
 #include "Wire.h"
 #endif
 
-#if NUM_SERVOS > 0
-#include "Servo.h"
-#endif
-
 #if defined(DIGIPOTSS_PIN) && DIGIPOTSS_PIN > -1
 #include <SPI.h>
 #endif
@@ -293,10 +289,6 @@ ShortTimer usb_timer;
 
 bool Stopped=false;
 bool processing_tcode; // Helper variable to block certain functions while T-code is being processed
-
-#if NUM_SERVOS > 0
-  Servo servos[NUM_SERVOS];
-#endif
 
 static bool target_direction;
 
@@ -484,25 +476,6 @@ void suicide()
   #if defined(SUICIDE_PIN) && SUICIDE_PIN > -1
     SET_OUTPUT(SUICIDE_PIN);
     WRITE(SUICIDE_PIN, LOW);
-  #endif
-}
-
-void servo_init()
-{
-  #if (NUM_SERVOS >= 1) && defined(SERVO0_PIN) && (SERVO0_PIN > -1)
-    servos[0].attach(SERVO0_PIN);
-  #endif
-  #if (NUM_SERVOS >= 2) && defined(SERVO1_PIN) && (SERVO1_PIN > -1)
-    servos[1].attach(SERVO1_PIN);
-  #endif
-  #if (NUM_SERVOS >= 3) && defined(SERVO2_PIN) && (SERVO2_PIN > -1)
-    servos[2].attach(SERVO2_PIN);
-  #endif
-  #if (NUM_SERVOS >= 4) && defined(SERVO3_PIN) && (SERVO3_PIN > -1)
-    servos[3].attach(SERVO3_PIN);
-  #endif
-  #if (NUM_SERVOS >= 5)
-    #error "TODO: enter initalisation code for more servos"
   #endif
 }
 
@@ -3927,7 +3900,6 @@ extern uint8_t st_backlash_y;
 //!@n M226 - Wait for Pin state
 //!@n M240 - Trigger camera
 //!@n M250 - Set LCD contrast C<contrast value> (value 0..63)
-//!@n M280 - Set/Get servo position (not active)
 //!@n M300 - Play tone
 //!@n M301 - Set hotend PID
 //!@n M302 - Allow cold extrude, or set minimum extrude temperature
@@ -7143,55 +7115,6 @@ Sigma_Exit:
       }
     }
     break;
-
-    #if NUM_SERVOS > 0
-
-    /*!
-    ### M280 - Set/Get servo position <a href="https://reprap.org/wiki/G-code#M280:_Set_servo_position">M280: Set servo position</a>
-    In Prusa Firmware this G-code is deactivated by default, must be turned on in the source code.
-    #### Usage
-
-        M280 [ P | S ]
-
-    #### Parameters
-    - `P` - Servo index (id)
-    - `S` - Target position
-    */
-    case 280: // M280 - set servo position absolute. P: servo index, S: angle or microseconds
-      {
-        int servo_index = -1;
-        int servo_position = 0;
-        if (code_seen('P'))
-          servo_index = code_value();
-        if (code_seen('S')) {
-          servo_position = code_value();
-          if ((servo_index >= 0) && (servo_index < NUM_SERVOS)) {
-#if defined (ENABLE_AUTO_BED_LEVELING) && (PROBE_SERVO_DEACTIVATION_DELAY > 0)
-		      servos[servo_index].attach(0);
-#endif
-            servos[servo_index].write(servo_position);
-#if defined (ENABLE_AUTO_BED_LEVELING) && (PROBE_SERVO_DEACTIVATION_DELAY > 0)
-              _delay(PROBE_SERVO_DEACTIVATION_DELAY);
-              servos[servo_index].detach();
-#endif
-          }
-          else {
-            SERIAL_ECHO_START;
-            SERIAL_ECHO("Servo ");
-            SERIAL_ECHO(servo_index);
-            SERIAL_ECHOLN(" out of range");
-          }
-        }
-        else if (servo_index >= 0) {
-          SERIAL_PROTOCOL(MSG_OK);
-          SERIAL_PROTOCOL(" Servo ");
-          SERIAL_PROTOCOL(servo_index);
-          SERIAL_PROTOCOL(": ");
-          SERIAL_PROTOCOLLN(servos[servo_index].read());
-        }
-      }
-      break;
-    #endif // NUM_SERVOS > 0
 
     #if (LARGE_FLASH == true && BEEPER > 0 )
     /*!
