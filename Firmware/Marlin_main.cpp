@@ -7116,7 +7116,7 @@ Sigma_Exit:
     }
     break;
 
-    #if (LARGE_FLASH == true && BEEPER > 0 )
+    #if (BEEPER > 0)
     /*!
     ### M300 - Play tone <a href="https://reprap.org/wiki/G-code#M300:_Play_beep_sound">M300: Play beep sound</a>
     In Prusa Firmware the defaults are `100Hz` and `1000ms`, so that `M300` without parameters will beep for a second.
