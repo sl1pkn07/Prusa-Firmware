@@ -726,12 +726,6 @@ void softReset(void) {
     while(1);
 }
 
-
-#ifdef MESH_BED_LEVELING
-   enum MeshLevelingState { MeshReport, MeshStart, MeshNext, MeshSet };
-#endif
-
-
 static void factory_reset_stats(){
     eeprom_update_dword_notify((uint32_t *)EEPROM_TOTALTIME, 0);
     eeprom_update_dword_notify((uint32_t *)EEPROM_FILAMENTUSED, 0);
