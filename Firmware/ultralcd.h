@@ -47,7 +47,6 @@ void lcd_setalertstatuspgm(const char* message, uint8_t severity = LCD_STATUS_AL
 uint8_t get_message_level();
 void lcd_reset_alert_level();
 
-void lcd_pick_babystep();
 uint8_t lcd_alright();
 void show_preheat_nozzle_warning();
 void lcd_wait_interact();
