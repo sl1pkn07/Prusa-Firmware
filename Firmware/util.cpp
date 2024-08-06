@@ -5,6 +5,7 @@
 #include "sound.h"
 #include "language.h"
 #include "util.h"
+#include <avr/eeprom.h>
 #include <avr/pgmspace.h>
 #include "Prusa_farm.h"
 
