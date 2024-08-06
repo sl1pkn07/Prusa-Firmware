@@ -12,6 +12,7 @@
 #define EEPROM_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include "Configuration_var.h"
 
 // Custom Mendel Name
