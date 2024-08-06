@@ -1,6 +1,7 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
+#include <stdint.h>
 #include "boards.h"
 
 #define STR_HELPER(x) #x
