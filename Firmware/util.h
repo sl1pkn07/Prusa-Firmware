@@ -96,7 +96,7 @@ public:
     : len(0)
     , found(false)
     {
-        char * pStrEnd = NULL;
+        const char * pStrEnd = NULL;
 
         // Start of the string
         this->ptr = strchr(pStr, '"');
