@@ -1,13 +1,13 @@
-#include "Configuration.h"
-
-#include "ultralcd.h"
-#include "menu.h"
-#include "sound.h"
-#include "language.h"
-#include "util.h"
 #include <avr/eeprom.h>
 #include <avr/pgmspace.h>
+
+#include "Configuration.h"
+#include "language.h"
+#include "menu.h"
 #include "Prusa_farm.h"
+#include "sound.h"
+#include "ultralcd.h"
+#include "util.h"
 
 // Allocate the version string in the program memory. Otherwise the string lands either on the stack or in the global RAM.
 static const char FW_VERSION_STR[] PROGMEM = FW_VERSION;
