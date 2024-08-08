@@ -1,5 +1,6 @@
 #include <avr/eeprom.h>
 #include <avr/pgmspace.h>
+#include <stdio.h> // for sprintf_P
 
 #include "Configuration.h"
 #include "language.h"
