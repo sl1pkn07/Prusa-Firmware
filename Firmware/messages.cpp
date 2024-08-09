@@ -414,6 +414,7 @@ const char MSG_HOST_ACTION_NOT_READY[] PROGMEM_N1 = "//action:not_ready"; ////
 const char MSG_HOST_ACTION_START[] PROGMEM_N1 = "//action:start"; ////
 const char MSG_HOST_ACTION_UVLO_RECOVERY_READY[] PROGMEM_N1 = "//action:uvlo_recovery_ready"; ////
 const char MSG_HOST_ACTION_UVLO_AUTO_RECOVERY_READY[] PROGMEM_N1 = "//action:uvlo_auto_recovery_ready"; ////
+const char MSG_HOST_ACTION_NOTIFICATION[] PROGMEM_N1 = "//action:notification %S\n"; ////
 #ifdef HOST_SHUTDOWN
 const char MSG_HOST_ACTION_SHUTDOWN[] PROGMEM_N1 = "//action:shutdown"; ////
 #endif //HOST_SHUTOWN
@@ -424,6 +425,7 @@ const char MSG_ADVANCE_K[] PROGMEM_N1 = "Advance K:"; ////c=13
 const char MSG_POWERPANIC_DETECTED[] PROGMEM_N1 = "POWER PANIC DETECTED"; ////c=20
 const char MSG_LCD_STATUS_CHANGED[] PROGMEM_N1 = "LCD status changed";
 const char MSG_UNKNOWN_CODE[] PROGMEM_N1 = "Unknown %c code: %s\n";
+const char MSG_FILAMENT_RUNOUT_DETECTED[] PROGMEM_N1 = "Filament runout detected!"; ////c=20 r=2
 
 // Common G-gcodes
 const char G1_E_F2700[] PROGMEM_N1 = "G1 E%-.3f F2700";

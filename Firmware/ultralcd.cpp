@@ -5074,7 +5074,11 @@ static void change_sheet()
     menu_back(3);
 }
 
-
+//! @brief Send a notification to the host. Param 'message' must reside in program memory!
+void sendHostNotification_P(const char* message)
+{
+    printf_P(MSG_HOST_ACTION_NOTIFICATION, message);
+}
 
 static void lcd_rename_sheet_menu()
 {

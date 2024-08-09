@@ -3406,6 +3406,7 @@ static void gcode_M600(const bool automatic, const float x_position, const float
       current_position[E_AXIS] += e_shift;
       plan_buffer_line_curposXYZE(FILAMENTCHANGE_RFEED);
       st_synchronize();
+      SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_PAUSED);
     } else {
         // Print is paused and the extruder may be cold
         // Filament change can be issued via the Tune menu
@@ -3505,8 +3506,13 @@ static void gcode_M600(const bool automatic, const float x_position, const float
     feedmultiply = saved_feedmultiply2;
     enquecommandf_P(MSG_M220, saved_feedmultiply2);
 
-    if (printingIsPaused()) lcd_setstatuspgm(_T(MSG_PRINT_PAUSED));
-    else lcd_setstatuspgm(MSG_WELCOME);
+    if (printingIsPaused()) {
+      lcd_setstatuspgm(_T(MSG_PRINT_PAUSED));
+    }
+    else {
+      lcd_setstatuspgm(MSG_WELCOME);
+      SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_RESUMED);
+    }
     custom_message_type = CustomMsg::Status;
 }
 

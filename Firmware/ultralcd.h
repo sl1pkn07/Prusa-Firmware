@@ -260,4 +260,6 @@ extern void lcd_heat_bed_on_load_toggle();
 extern void retract_for_ooze_prevention();
 #endif //COMMUNITY_PREVENT_OOZE
 
+extern void sendHostNotification_P(const char* message);
+
 #endif //ULTRALCD_H

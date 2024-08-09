@@ -149,6 +149,7 @@ void Filament_sensor::triggerFilamentRemoved() {
 
 void Filament_sensor::filRunout() {
 //    SERIAL_ECHOLNPGM("filRunout");
+    sendHostNotification_P(MSG_FILAMENT_RUNOUT_DETECTED);
     runoutEnabled = false;
     autoLoadEnabled = false;
     stop_and_save_print_to_ram(0, 0);

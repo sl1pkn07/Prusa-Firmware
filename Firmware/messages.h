@@ -416,6 +416,7 @@ extern const char MSG_HOST_ACTION_NOT_READY[];
 extern const char MSG_HOST_ACTION_START[];
 extern const char MSG_HOST_ACTION_UVLO_RECOVERY_READY[];
 extern const char MSG_HOST_ACTION_UVLO_AUTO_RECOVERY_READY[];
+extern const char MSG_HOST_ACTION_NOTIFICATION[];
 #ifdef HOST_SHUTDOWN
 extern const char MSG_HOST_ACTION_SHUTDOWN[];
 #endif //HOST_SHUTOWN
@@ -426,6 +427,7 @@ extern const char MSG_ADVANCE_K[];
 extern const char MSG_POWERPANIC_DETECTED[];
 extern const char MSG_LCD_STATUS_CHANGED[];
 extern const char MSG_UNKNOWN_CODE[];
+extern const char MSG_FILAMENT_RUNOUT_DETECTED[];
 
 // Common G-gcodes
 extern const char G1_E_F2700[];
