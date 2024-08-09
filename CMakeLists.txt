@@ -246,7 +246,6 @@ set(FW_SOURCES
     power_panic.cpp
     printer_state.cpp
     Prusa_farm.cpp
-    qr_solve.cpp
     rbuf.c
     Sd2Card.cpp
     SdBaseFile.cpp
@@ -272,7 +271,6 @@ set(FW_SOURCES
     uart2.c
     ultralcd.cpp
     util.cpp
-    vector_3.cpp
     xflash.c
     xflash_dump.cpp
     xyzcal.cpp

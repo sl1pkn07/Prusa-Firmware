@@ -411,7 +411,7 @@ extern uint8_t calc_percent_done();
 /*enum MarlinBusyState {
 	NOT_BUSY,           // Not in a handler
 	IN_HANDLER,         // Processing a GCode
-	IN_PROCESS,         // Known to be blocking command input (as in G29)
+	IN_PROCESS,         // Known to be blocking command input
 	PAUSED_FOR_USER,    // Blocking pending any input
 	PAUSED_FOR_INPUT    // Blocking pending text input (concept)
 };*/

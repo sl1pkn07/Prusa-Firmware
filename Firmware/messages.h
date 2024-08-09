@@ -386,16 +386,11 @@ extern const char MSG_WELCOME[];
 extern const char MSG_BROWNOUT_RESET[];
 extern const char MSG_EXTERNAL_RESET[];
 extern const char MSG_FILE_SAVED[];
-extern const char MSG_POSITION_UNKNOWN[];
 extern const char MSG_SOFTWARE_RESET[];
 extern const char MSG_UNKNOWN_COMMAND[];
 extern const char MSG_WATCHDOG_RESET[];
 extern const char MSG_Z_MAX[];
 extern const char MSG_Z_MIN[];
-extern const char MSG_ZPROBE_OUT[];
-#ifdef ENABLE_AUTO_BED_LEVELING
-extern const char MSG_ZPROBE_ZOFFSET[];
-#endif
 extern const char MSG_TMC_OVERTEMP[];
 extern const char MSG_Enqueing[];
 extern const char MSG_SD_ERR_WRITE_TO_FILE[];

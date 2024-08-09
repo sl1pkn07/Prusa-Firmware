@@ -386,16 +386,11 @@ const char MSG_WELCOME[] PROGMEM_N1 = WELCOME_MSG;
 const char MSG_BROWNOUT_RESET[] PROGMEM_N1 = " Brown out Reset"; ////
 const char MSG_EXTERNAL_RESET[] PROGMEM_N1 = " External Reset"; ////
 const char MSG_FILE_SAVED[] PROGMEM_N1 = "Done saving file."; ////
-const char MSG_POSITION_UNKNOWN[] PROGMEM_N1 = "Home X/Y before Z"; ////
 const char MSG_SOFTWARE_RESET[] PROGMEM_N1 = " Software Reset"; ////
 const char MSG_UNKNOWN_COMMAND[] PROGMEM_N1 = "Unknown command: \""; ////
 const char MSG_WATCHDOG_RESET[] PROGMEM_N1 = " Watchdog Reset"; ////
 const char MSG_Z_MAX[] PROGMEM_N1 = "z_max: "; ////
 const char MSG_Z_MIN[] PROGMEM_N1 = "z_min: "; ////
-const char MSG_ZPROBE_OUT[] PROGMEM_N1 = "Z probe out. bed"; ////
-#ifdef ENABLE_AUTO_BED_LEVELING
-const char MSG_ZPROBE_ZOFFSET[] PROGMEM_N1 = "Z Offset"; ////
-#endif
 const char MSG_TMC_OVERTEMP[] PROGMEM_N1 = "TMC DRIVER OVERTEMP"; ////
 const char MSG_Enqueing[] PROGMEM_N1 = "enqueing \""; ////
 const char MSG_SD_ERR_WRITE_TO_FILE[] PROGMEM_N1 = "error writing to file"; ////
