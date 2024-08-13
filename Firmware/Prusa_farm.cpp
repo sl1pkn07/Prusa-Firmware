@@ -8,6 +8,7 @@
 #include "ultralcd.h"
 #include "Filament_sensor.h"
 #include "language.h"
+#include "lcd.h"
 #include "stopwatch.h"
 
 #ifdef PRUSA_FARM

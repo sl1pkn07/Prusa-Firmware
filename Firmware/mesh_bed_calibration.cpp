@@ -2,6 +2,7 @@
 #include "ConfigurationStore.h"
 #include "util.h"
 #include "language.h"
+#include "lcd.h"
 #include "mesh_bed_calibration.h"
 #include "mesh_bed_leveling.h"
 #include "stepper.h"

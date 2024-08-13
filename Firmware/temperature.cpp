@@ -36,6 +36,7 @@
 #include "fancheck.h"
 #include "messages.h"
 #include "language.h"
+#include "lcd.h"
 
 #include "SdFatUtil.h"
 

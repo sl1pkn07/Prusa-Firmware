@@ -11,6 +11,7 @@
 #include "ultralcd.h"
 #include "Filament_sensor.h"
 #include "language.h"
+#include "lcd.h"
 #include "temperature.h"
 #include "sound.h"
 

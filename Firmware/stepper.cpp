@@ -26,6 +26,7 @@
 #include "planner.h"
 #include "temperature.h"
 #include "ultralcd.h"
+#include "lcd.h"
 #include "cardreader.h"
 #include "speed_lookuptable.h"
 #if defined(DIGIPOTSS_PIN) && DIGIPOTSS_PIN > -1
