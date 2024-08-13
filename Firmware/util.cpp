@@ -4,6 +4,8 @@
 
 #include "Configuration.h"
 #include "language.h"
+#include "lcd.h"
+#include "Marlin.h" // delay_keep_alive
 #include "menu.h"
 #include "Prusa_farm.h"
 #include "sound.h"
