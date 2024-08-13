@@ -21,7 +21,6 @@
 #include "Configuration.h"
 #include "pins.h"
 #include "Timer.h"
-#include "mmu2.h"
 #include "printer_state.h"
 
 #ifndef AT90USB

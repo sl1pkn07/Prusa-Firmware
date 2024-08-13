@@ -8,6 +8,7 @@
 #include "language.h"
 #include "menu.h"
 #include "messages.h"
+#include "mmu2.h"
 #include "planner.h"
 #include "temperature.h"
 #include "ultralcd.h"
