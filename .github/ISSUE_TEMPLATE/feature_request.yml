@@ -14,11 +14,11 @@ body:
       label: Printer model
       description: Enter the printer model(s) where you would like this feature
       placeholder: 'MK3S/+, MK3, MK2.5S, MK2.5'
-    options:
-      - MK3S/+
-      - MK3
-      - MK2.5S
-      - MK2.5
+      options:
+        - MK3S/+
+        - MK3
+        - MK2.5S
+        - MK2.5
     validations:
       required: true
   - type: textarea

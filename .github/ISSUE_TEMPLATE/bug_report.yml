@@ -13,12 +13,11 @@ body:
     attributes:
       label: Printer model
       description: Enter the printer model(s) where you encountered the issue
-      placeholder: 'MK3S/+, MK3, Mk2.5S, MK2.5'
-    options:
-      - MK3S/+
-      - MK3
-      - MK2.5S
-      - MK2.5
+      options:
+        - MK3S/+
+        - MK3
+        - MK2.5S
+        - MK2.5
     validations:
       required: true
   - type: dropdown
@@ -26,11 +25,11 @@ body:
     attributes:
       label: MMU model
       description: Enter the MMU model(s) where you encountered the issue
-      placeholder: 'MMU3, MMU2S'
-    options:
-      - MMU3
-      - MMU2S
-      - None
+      multiple: false
+      options:
+        - MMU3
+        - MMU2S
+        - No-MMU
     validations:
       required: true
   - type: input
@@ -53,12 +52,13 @@ body:
     id: printing_from
     attributes:
       label: Printing from...
-    options:
-      - SD Card
-      - PrusaLink
-      - PrusaConnect
-      - OctoPrint
-      - Other host software
+      multiple: false
+      options:
+        - SD Card
+        - PrusaLink
+        - PrusaConnect
+        - OctoPrint
+        - Other host software
     validations:
       required: true
   - type: textarea
