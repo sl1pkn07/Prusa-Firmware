@@ -14,10 +14,10 @@ body:
       label: Printer model
       description: Enter the printer model(s) where you would like this feature
       options:
-        - MK3S/+
-        - MK3
-        - MK2.5S
-        - MK2.5
+        - label: MK3S/+
+        - label: MK3
+        - label: MK2.5S
+        - label: MK2.5
     validations:
       required: true
   - type: textarea
