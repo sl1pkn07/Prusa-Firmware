@@ -374,7 +374,7 @@ void fw_version_check(const char *pVersion) {
 bool filament_presence_check() {
     // When MMU is enabled, this is not necessary and the G-code file
     // should always tell the MMU which filament to load.
-    if (MMU2::mmu2.Enabled()) {
+    if (eeprom_read_byte((uint8_t *)EEPROM_MMU_ENABLED)) {
         goto done;
     }
 
