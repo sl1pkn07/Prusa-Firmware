@@ -3,6 +3,7 @@
 #include <stdio.h> // for sprintf_P
 
 #include "Configuration.h"
+#include "Filament_sensor.h"
 #include "language.h"
 #include "lcd.h"
 #include "Marlin.h" // delay_keep_alive
