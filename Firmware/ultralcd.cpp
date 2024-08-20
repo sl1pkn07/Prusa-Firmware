@@ -4406,6 +4406,13 @@ static void sheets_menu()
 
 static void nozzle_change()
 {
+#ifdef FILAMENT_SENSOR
+    if (fsensor.isEnabled() && fsensor.getFilamentPresent()) {
+        lcd_show_fullscreen_message_and_wait_P(_T(MSG_UNLOAD_FILAMENT_REPEAT));
+        lcd_return_to_status();
+        return;
+    }
+#endif //FILAMENT_SENSOR
     lcd_commands_type = LcdCommands::NozzleCNG;
     lcd_return_to_status();
 }
