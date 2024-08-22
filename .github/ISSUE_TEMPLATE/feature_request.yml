@@ -12,7 +12,7 @@ body:
     id: printer_model
     attributes:
       label: Printer model
-      description: Enter the printer model(s) where you would like this feature
+      description: Select the printer model(s) where you would like this feature
       options:
         - label: MK3S/+
         - label: MK3

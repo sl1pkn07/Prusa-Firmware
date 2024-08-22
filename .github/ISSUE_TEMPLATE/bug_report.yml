@@ -27,15 +27,15 @@ body:
       description: Enter the MMU model(s) where you encountered the issue
       multiple: false
       options:
+        - No-MMU
         - MMU3
         - MMU2S
-        - No-MMU
     validations:
       required: true
   - type: input
     id: firmware_version
     attributes:
-      label: Firmware version
+      label: Firmware versions
       description: |
         If you're using a custom firmware (not downloaded from Prusa), please note that!
       placeholder: '3.14.0, 3.12.0-RC1, 3.14.0 and 3.0.2...'
@@ -47,7 +47,7 @@ body:
       label: Upgrades and modifications
       description: 'If your printer has upgrades or was modified, please note that!  If not, please write None or leave blank.'
       placeholder: |
-        None, filament runout sensor (Mini), custom extruder/hotend (which), ...
+        None, custom extruder/hotend (which), different frame, ...
   - type: dropdown
     id: printing_from
     attributes:
@@ -93,4 +93,4 @@ body:
         - **video** or **photos** of the issue happening
 
         **Crash dump: Do not share the file publicly**, as the crash dump contains a raw snapshot of the printer's memory and may include unencrypted sensitive information.
-        Please send the crash dump file to Prusa by emailing it to reports@prusa3d.com and referencing this issue. Sharing this file is important and helps us investigate the bug.
+        Please send the crash dump file to Prusa by emailing it to reports@prusa3d.com and referencing this issue. In reply to the email, you will be automatically assigned a reference code to be mentioned in the issue. Sharing this file is important and helps us investigate the bug.

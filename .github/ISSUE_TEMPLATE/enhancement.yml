@@ -12,7 +12,7 @@ body:
     id: printer_model
     attributes:
       label: Printer model
-      description: Enter the printer model(s) where you would like this enhancement
+      description: Select the printer model(s) where you would like this enhancement
       options:
         - label: MK3S/+
         - label: MK3
