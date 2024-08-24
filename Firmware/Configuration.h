@@ -301,10 +301,6 @@ your extruder heater takes 2 minutes to hit the target on heating.
 //=============================Additional Features===========================
 //===========================================================================
 
-// Custom M code points
-#define CUSTOM_M_CODES
-
-
 // Host Keepalive
 //
 // When enabled Marlin will send a busy status message to the host
