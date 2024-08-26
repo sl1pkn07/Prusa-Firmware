@@ -674,13 +674,6 @@ msgstr ""
 msgid "Fil. sensor"
 msgstr ""
 
-#. MSG_FILAMENT c=17
-#: ../../Firmware/Marlin_main.cpp:3453 ../../Firmware/Tcodes.cpp:34
-#: ../../Firmware/messages.cpp:37 ../../Firmware/ultralcd.cpp:3613
-#: ../../Firmware/ultralcd.cpp:6822
-msgid "Filament"
-msgstr ""
-
 #. MSG_DESC_UNLOAD_MANUALLY c=20 r=8
 #: ../../Firmware/mmu2/errors_list.h:284 ../../Firmware/mmu2/errors_list.h:339
 msgid ""

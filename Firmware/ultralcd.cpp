@@ -3620,7 +3620,7 @@ void lcd_v2_calibration() {
 	if (MMU2::mmu2.Enabled()) {
 		const uint8_t filament = choose_menu_P(
 			_T(MSG_SELECT_FILAMENT),
-			_T(MSG_FILAMENT),(_T(MSG_CANCEL)+1)); //Hack to reuse MSG but strip 1st char off
+			MSG_FILAMENT,(_T(MSG_CANCEL)+1)); //Hack to reuse MSG but strip 1st char off
 		if (filament < MMU_FILAMENT_COUNT) {
 			lay1cal_filament = filament;
 		} else {
@@ -6787,7 +6787,7 @@ static bool lcd_selftest_fsensor(void)
 static bool selftest_irsensor()
 {
     // Ask user which slot to load filament from
-    uint8_t slot = choose_menu_P(_T(MSG_SELECT_FILAMENT), _T(MSG_FILAMENT));
+    uint8_t slot = choose_menu_P(_T(MSG_SELECT_FILAMENT), MSG_FILAMENT);
 
     // Render self-test screen
     lcd_selftest_screen(TestScreen::Fsensor, 0, 1, true, 0);

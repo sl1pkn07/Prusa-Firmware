@@ -31,7 +31,7 @@ void TCodes(char *const strchr_pointer, const uint8_t codeValue) {
     } else if (strchr_pointer[index] == 'x' || strchr_pointer[index] == '?'){
         // load to extruder gears; if mmu is not present do nothing
         if (MMU2::mmu2.Enabled()) {
-            MMU2::mmu2.tool_change(strchr_pointer[index], choose_menu_P(_T(MSG_SELECT_FILAMENT), _T(MSG_FILAMENT)));
+            MMU2::mmu2.tool_change(strchr_pointer[index], choose_menu_P(_T(MSG_SELECT_FILAMENT), MSG_FILAMENT));
         }
     } else if (strchr_pointer[index] == 'c'){
         // load from extruder gears to nozzle (nozzle should be preheated)

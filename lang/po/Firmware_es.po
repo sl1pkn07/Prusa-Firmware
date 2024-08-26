@@ -686,13 +686,6 @@ msgstr "Fil. acabado"
 msgid "Fil. sensor"
 msgstr "Sensor Fil."
 
-#. MSG_FILAMENT c=17
-#: ../../Firmware/Marlin_main.cpp:3453 ../../Firmware/Tcodes.cpp:34
-#: ../../Firmware/messages.cpp:37 ../../Firmware/ultralcd.cpp:3613
-#: ../../Firmware/ultralcd.cpp:6822
-msgid "Filament"
-msgstr "Filamento"
-
 #. MSG_FILAMENT_CLEAN c=20 r=3
 #: ../../Firmware/messages.cpp:41 ../../Firmware/ultralcd.cpp:2261
 #: ../../Firmware/ultralcd.cpp:2265

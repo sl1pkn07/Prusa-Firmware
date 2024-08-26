@@ -38,7 +38,6 @@ extern const char MSG_ERROR[];
 extern const char MSG_EXTRUDER[];
 extern const char MSG_FANS_CHECK[];
 extern const char MSG_FIL_RUNOUTS[];
-extern const char MSG_FILAMENT[];
 extern const char MSG_FAN_SPEED[];
 extern const char MSG_HOTEND_FAN_SPEED[];
 extern const char MSG_PRINT_FAN_SPEED[];
@@ -380,6 +379,7 @@ extern const char MSG_FW_MK3_DETECTED [];
 //not internationalized messages
 extern const char MSG_SPOOL_JOIN[];
 extern const char MSG_FIRMWARE[];
+extern const char MSG_FILAMENT[];
 extern const char MSG_TOSHIBA_FLASH_AIR_COMPATIBILITY[];
 extern const char MSG_PINDA[];
 extern const char MSG_WELCOME[];
