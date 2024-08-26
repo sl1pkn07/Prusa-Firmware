@@ -2609,6 +2609,16 @@ msgstr "Mlaznica je vruća! Pričekajte hlađenje."
 msgid "Nozzle changed?"
 msgstr "Mlaznica se promijenila?"
 
+#. MSG_MISSING_FILAMENT_CONTINUE c=20 r=3
+#: ../../Firmware/messages.cpp:157 ../../Firmware/util.cpp:388
+msgid "There is no filament loaded. Continue?"
+msgstr "Nema umetnute niti. Nastavite?"
+
+#. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
+#: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
+msgid "There is no filament loaded. Print cancelled."
+msgstr "Nema umetnute niti. Print je otkazan."
+
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr "Uklonite stari fil. i pritisnite gumb za pocetak stavljanja novog."
 

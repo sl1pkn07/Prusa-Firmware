@@ -2615,6 +2615,16 @@ msgstr "L'ugello è caldo! Attendere il raffreddamento."
 msgid "Nozzle changed?"
 msgstr "L'ugello è cambiato?"
 
+#. MSG_MISSING_FILAMENT_CONTINUE c=20 r=3
+#: ../../Firmware/messages.cpp:157 ../../Firmware/util.cpp:388
+msgid "There is no filament loaded. Continue?"
+msgstr "Non è caricato alcun filamento. Continuare?"
+
+#. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
+#: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
+msgid "There is no filament loaded. Print cancelled."
+msgstr "Non è caricato alcun filamento. Stampa annullata."
+
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr "Rimuovi il fil. precedente e premi la manopola per caricare il nuovo."
 

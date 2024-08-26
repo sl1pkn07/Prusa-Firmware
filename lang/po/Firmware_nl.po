@@ -2617,6 +2617,16 @@ msgstr "Mondstuk is heet! Wacht op afkoeling."
 msgid "Nozzle changed?"
 msgstr "Mondstuk veranderd?"
 
+#. MSG_MISSING_FILAMENT_CONTINUE c=20 r=3
+#: ../../Firmware/messages.cpp:157 ../../Firmware/util.cpp:388
+msgid "There is no filament loaded. Continue?"
+msgstr "Geen filament geladen. Doorgaan?"
+
+#. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
+#: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
+msgid "There is no filament loaded. Print cancelled."
+msgstr "Geen filament geladen. Afdrukken geannuleerd."
+
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr ""
 #~ "Verwijder de oude filament en druk op de knop om nieuwe filament te laden."

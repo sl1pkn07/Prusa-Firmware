@@ -2607,6 +2607,16 @@ msgstr "Dysza jest gorąca! Poczekaj na schłodzenie."
 msgid "Nozzle changed?"
 msgstr "Dysza została zmieniona?"
 
+#. MSG_MISSING_FILAMENT_CONTINUE c=20 r=3
+#: ../../Firmware/messages.cpp:157 ../../Firmware/util.cpp:388
+msgid "There is no filament loaded. Continue?"
+msgstr "Nie ma załadowanego filamentu. Kontynuować?"
+
+#. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
+#: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
+msgid "There is no filament loaded. Print cancelled."
+msgstr "Nie ma załadowanego filamentu. Druk anulowany."
+
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr "Wyciągnij poprzedni filament i naciśnij pokrętło aby załadować nowy."
 
