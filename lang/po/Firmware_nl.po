@@ -2625,7 +2625,7 @@ msgstr "Geen filament geladen. Doorgaan?"
 #. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
 #: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
 msgid "There is no filament loaded. Print cancelled."
-msgstr "Geen filament geladen. Afdrukken geannuleerd."
+msgstr "Geen filament geladen. Printen geannuleerd."
 
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr ""
