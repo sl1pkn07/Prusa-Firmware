@@ -1702,7 +1702,7 @@ msgid ""
 " Print cancelled."
 msgstr ""
 "De diameter van de tuit van de printer verschilt van de G-code. Controleer "
-"de waarde in de instellingen. Afdrukken geannuleerd."
+"de waarde in de instellingen. Printen geannuleerd."
 
 #. MSG_DESC_PULLEY_CANNOT_MOVE c=20 r=8
 #: ../../Firmware/mmu2/errors_list.h:246 ../../Firmware/mmu2/errors_list.h:302
