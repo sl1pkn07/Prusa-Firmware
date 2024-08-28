@@ -2595,12 +2595,12 @@ msgstr "Vyměnili jste trysku?"
 #. MSG_MISSING_FILAMENT_CONTINUE c=20 r=3
 #: ../../Firmware/messages.cpp:157 ../../Firmware/util.cpp:388
 msgid "There is no filament loaded. Continue?"
-msgstr "Není vloženo žádné vlákno. Pokračovat?"
+msgstr "Není vložen filament. Pokračovat?"
 
 #. MSG_MISSING_FILAMENT_CANCELLED c=20 r=8
 #: ../../Firmware/messages.cpp:158 ../../Firmware/util.cpp:389
 msgid "There is no filament loaded. Print cancelled."
-msgstr "Není vloženo žádné vlákno. Tisk zrušen."
+msgstr "Není vložen filament. Tisk zrušen."
 
 #~ msgid "Remove old filament and press the knob to start loading new filament."
 #~ msgstr "Vyjmete stary filament a stisknete tlacitko pro zavedeni noveho."
