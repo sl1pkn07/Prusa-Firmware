@@ -2771,7 +2771,7 @@ static void gcode_G80()
     st_synchronize();
     static uint8_t g80_fail_cnt = 0;
     if (mesh_point != MESH_NUM_X_POINTS * MESH_NUM_Y_POINTS) {
-        if (g80_fail_cnt++ >= 2) {
+        if (g80_fail_cnt++ >= 1) {
             kill(_T(MSG_MBL_FAILED_Z_CAL));
         }
         Sound_MakeSound(e_SOUND_TYPE_StandardAlert);
