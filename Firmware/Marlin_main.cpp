@@ -2583,7 +2583,8 @@ static void gcode_G80()
 {
     constexpr float XY_AXIS_FEEDRATE = (homing_feedrate[X_AXIS] * 3) / 60;
     constexpr float Z_LIFT_FEEDRATE = homing_feedrate[Z_AXIS] / 60;
-    constexpr float Z_CALIBRATION_THRESHOLD = 0.35f;
+    constexpr float Z_CALIBRATION_THRESHOLD_TIGHT = 0.35f; // used for 7x7 MBL
+    constexpr float Z_CALIBRATION_THRESHOLD_RELAXED = 1.f; // used for 3x3 MBL
     constexpr float MESH_HOME_Z_SEARCH_FAST = 0.35f;
     st_synchronize();
     if (planner_aborted)
@@ -2617,6 +2618,10 @@ static void gcode_G80()
     uint8_t nMeasPoints = eeprom_read_byte((uint8_t*)EEPROM_MBL_POINTS_NR);
     if (uint8_t codeSeen = code_seen('N'), value = code_value_uint8(); codeSeen && (value == 7 || value == 3))
       nMeasPoints = value;
+
+    // 7x7 region MBL needs tighter thresholds for triggering a Z realignment. This is because you want to have as little of a misalignment as possible between
+    // the "inner" MBL region and "outer" MBL region which is interpolated from Z calibration values.
+    const float Z_CALIBRATION_THRESHOLD = (nMeasPoints == 3) ? Z_CALIBRATION_THRESHOLD_RELAXED : Z_CALIBRATION_THRESHOLD_TIGHT;
 
     uint8_t nProbeRetryCount = eeprom_read_byte((uint8_t*)EEPROM_MBL_PROBE_NR);
     if (uint8_t codeSeen = code_seen('C'), value = code_value_uint8(); codeSeen && value >= 1 && value <= 10)
