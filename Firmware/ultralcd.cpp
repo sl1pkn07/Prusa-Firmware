@@ -5533,10 +5533,19 @@ static void lcd_mesh_bed_leveling_settings()
 
 	bool magnet_elimination = (eeprom_read_byte((uint8_t*)EEPROM_MBL_MAGNET_ELIMINATION) > 0);
 	uint8_t points_nr = eeprom_read_byte((uint8_t*)EEPROM_MBL_POINTS_NR);
-    uint8_t mbl_z_probe_nr = eeprom_read_byte((uint8_t*)EEPROM_MBL_PROBE_NR);
+	uint8_t mbl_z_probe_nr = eeprom_read_byte((uint8_t*)EEPROM_MBL_PROBE_NR);
 	char sToggle[4]; //enough for nxn format
 
 	MENU_BEGIN();
+	ON_MENU_LEAVE(
+		// Prompt user to run Z calibration for best results with region MBL.
+		if (points_nr == 7) {
+			uint8_t result = lcd_show_multiscreen_message_yes_no_and_wait_P(_T(MSG_Z_CALIBRATION_PROMPT), true, 0);
+			if (result == LCD_LEFT_BUTTON_CHOICE) {
+				lcd_mesh_calibration_z();
+			}
+		}
+	);
 	MENU_ITEM_BACK_P(_T(MSG_SETTINGS));
 	sToggle[0] = points_nr + '0';
 	sToggle[1] = 'x';

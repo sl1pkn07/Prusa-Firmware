@@ -127,6 +127,7 @@ extern const char MSG_SILENT[];
 extern const char MSG_NORMAL[];
 extern const char MSG_STEALTH[];
 extern const char MSG_STEEL_SHEET_CHECK[];
+extern const char MSG_Z_CALIBRATION_PROMPT[];
 extern const char MSG_STOP_PRINT[];
 extern const char MSG_STOPPED[];
 extern const char MSG_PINDA_CALIBRATION[];
