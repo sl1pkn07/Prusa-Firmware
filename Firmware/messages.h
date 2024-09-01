@@ -211,7 +211,7 @@ extern const char MSG_CHANGED_PRINTER [];
 extern const char MSG_CHANGED_BOTH [];
 extern const char MSG_DEFAULT_SETTINGS_LOADED [];
 extern const char MSG_FORCE_SELFTEST [];
-extern const char MSG_MBL_FAILED_Z_CAL [];
+extern const char MSG_MBL_FAILED [];
 extern const char MSG_ZLEVELING_ENFORCED [];
 extern const char MSG_UNLOAD_SUCCESSFUL [];
 extern const char MSG_CHECK_IDLER [];

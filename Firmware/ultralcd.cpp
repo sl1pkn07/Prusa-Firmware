@@ -3748,6 +3748,12 @@ static void wizard_lay1cal_message(bool cold)
             _T(MSG_WIZARD_V2_CAL_2));
 }
 
+void lcd_z_calibration_prompt(bool allowTimeouting) {
+    uint8_t result = lcd_show_multiscreen_message_yes_no_and_wait_P(_T(MSG_Z_CALIBRATION_PROMPT), allowTimeouting, 0);
+    if (result == LCD_LEFT_BUTTON_CHOICE) {
+        lcd_mesh_calibration_z();
+    }
+}
 
 void prompt_steel_sheet_on_bed(bool wantedState) {
 #ifdef STEEL_SHEET
@@ -5546,10 +5552,7 @@ static void lcd_mesh_bed_leveling_settings()
 	ON_MENU_LEAVE(
 		// Prompt user to run Z calibration for best results with region MBL.
 		if (points_nr == 7) {
-			uint8_t result = lcd_show_multiscreen_message_yes_no_and_wait_P(_T(MSG_Z_CALIBRATION_PROMPT), true, 0);
-			if (result == LCD_LEFT_BUTTON_CHOICE) {
-				lcd_mesh_calibration_z();
-			}
+            lcd_z_calibration_prompt(true);
 		}
 	);
 	MENU_ITEM_BACK_P(_T(MSG_SETTINGS));

@@ -2550,10 +2550,10 @@ msgstr "M600 filamentskifte. Sett inn en ny filament eller løs ut den gamle."
 msgid "Sensitivity"
 msgstr "Sensitivitet"
 
-#. MSG_MBL_FAILED_Z_CAL c=20 r=4
+#. MSG_MBL_FAILED c=20 r=4
 #: ../../Firmware/Marlin_main.cpp:3038 ../../Firmware/messages.cpp:203
-msgid "Mesh bed leveling failed. Please run Z calibration."
-msgstr "Sengeplanering feilet. Kjør Z-kalibrering."
+msgid "Mesh bed leveling failed. Print canceled."
+msgstr "Sengeplanering feilet."
 
 #. MSG_SET_READY c=18
 #: ../../Firmware/messages.cpp:105 ../../Firmware/ultralcd.cpp:5265

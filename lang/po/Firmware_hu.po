@@ -2573,10 +2573,10 @@ msgstr ""
 msgid "Sensitivity"
 msgstr "Érzékenység"
 
-#. MSG_MBL_FAILED_Z_CAL c=20 r=4
+#. MSG_MBL_FAILED c=20 r=4
 #: ../../Firmware/Marlin_main.cpp:3038 ../../Firmware/messages.cpp:203
-msgid "Mesh bed leveling failed. Please run Z calibration."
-msgstr "Sikertelen asztal szintezés. Kérjük, futtasd a Z kalibrálást."
+msgid "Mesh bed leveling failed. Print canceled."
+msgstr "Sikertelen asztal szintezés."
 
 #. MSG_SET_READY c=18
 #: ../../Firmware/messages.cpp:105 ../../Firmware/ultralcd.cpp:5265
