@@ -4495,20 +4495,17 @@ static void lcd_settings_menu()
 
 #ifdef TMC2130
 static void lcd_settings_linearity_correction_menu_save() {
-    bool changed = false;
     for (uint8_t axis = 0; axis < NUM_AXIS; axis++) {
-        // Constrain the value
-        if (tmc2130_wave_fac[axis] < TMC2130_WAVE_FAC1000_MIN) tmc2130_wave_fac[axis] = 0;
 
-        // Has the value changed?
-        changed |= (eeprom_read_byte((uint8_t*)EEPROM_TMC2130_WAVE_X_FAC - axis) != tmc2130_wave_fac[axis]);
+        if (tmc2130_wave_fac[axis] < TMC2130_WAVE_FAC1000_MIN) {
+            tmc2130_wave_fac[axis] = 0;
+        }
 
-        // If the value is changed, then write to EEPROM
         eeprom_update_byte_notify((uint8_t*)EEPROM_TMC2130_WAVE_X_FAC - axis, tmc2130_wave_fac[axis]);
     }
 
-    // If any of the values changed, then re-init the TMC2130 driver
-    if (changed) tmc2130_init(TMCInitParams(false, FarmOrUserECool()));
+    // Re-init the TMC2130 driver to apply changes, if any
+    tmc2130_init(TMCInitParams(false, FarmOrUserECool()));
 }
 #endif //TMC2130
 
