@@ -2589,7 +2589,7 @@ msgstr "Sensibilité"
 #. MSG_MBL_FAILED c=20 r=4
 #: ../../Firmware/Marlin_main.cpp:3038 ../../Firmware/messages.cpp:203
 msgid "Mesh bed leveling failed. Print canceled."
-msgstr "Mesh bed leveling a échoué."
+msgstr "Mesh bed leveling a échoué. Impression annulée."
 
 #. MSG_SET_READY c=18
 #: ../../Firmware/messages.cpp:105 ../../Firmware/ultralcd.cpp:5265
