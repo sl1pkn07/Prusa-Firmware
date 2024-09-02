@@ -2957,9 +2957,9 @@ bool gcode_M45(bool onlyZ, int8_t verbosity_level)
 	if (lcd_calibrate_z_end_stop_manual(onlyZ))
 	{
 #endif //TMC2130
-		prompt_steel_sheet_on_bed(true);
 		lcd_show_fullscreen_message_and_wait_P(_T(MSG_CONFIRM_NOZZLE_CLEAN));
 		if(onlyZ){
+			prompt_steel_sheet_on_bed(true);
 			lcd_display_message_fullscreen_P(_T(MSG_MEASURE_BED_REFERENCE_HEIGHT_LINE1));
 			lcd_puts_at_P(0,3,_n("1/9"));
 		}else{
