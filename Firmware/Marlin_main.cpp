@@ -8805,6 +8805,7 @@ static void handleSafetyTimer()
     {
         disable_heater();
         lcd_show_fullscreen_message_and_wait_P(_T(MSG_BED_HEATING_SAFETY_DISABLED));
+        lcd_return_to_status();
     }
 }
 #endif //SAFETYTIMER
