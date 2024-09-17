@@ -5216,7 +5216,7 @@ static void lcd_main_menu()
         MENU_ITEM_FUNCTION_P(_T(MSG_FILAMENTCHANGE), lcd_colorprint_change);//8
 
     if (!printer_recovering()) {
-        if ( moves_planned() || printer_active()) {
+        if ( moves_planned() || printer_active() || fan_check_error == EFCE_REPORTED) {
             MENU_ITEM_SUBMENU_P(_T(MSG_TUNE), lcd_tune_menu);
         } else if (!Stopped) {
             MENU_ITEM_SUBMENU_P(_T(MSG_PREHEAT), lcd_preheat_menu);
@@ -5719,9 +5719,8 @@ void print_stop(bool interactive, bool unconditional_stop)
         // Reset the sd status
         card.sdprinting = false;
         card.closefile();
-    } else {
-        SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_CANCEL);
     }
+    SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_CANCEL);
 
 #ifdef MESH_BED_LEVELING
     mbl.active = false;
