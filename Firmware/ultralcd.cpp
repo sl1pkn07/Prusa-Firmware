@@ -5216,7 +5216,11 @@ static void lcd_main_menu()
         MENU_ITEM_FUNCTION_P(_T(MSG_FILAMENTCHANGE), lcd_colorprint_change);//8
 
     if (!printer_recovering()) {
-        if ( moves_planned() || printer_active() || fan_check_error == EFCE_REPORTED) {
+        if ( moves_planned() || printer_active()
+#ifdef FANCHECK
+         || fan_check_error == EFCE_REPORTED
+#endif //End FANCHECK
+        ) {
             MENU_ITEM_SUBMENU_P(_T(MSG_TUNE), lcd_tune_menu);
         } else if (!Stopped) {
             MENU_ITEM_SUBMENU_P(_T(MSG_PREHEAT), lcd_preheat_menu);
