@@ -2583,7 +2583,7 @@ static void gcode_G80()
 {
     constexpr float XY_AXIS_FEEDRATE = (homing_feedrate[X_AXIS] * 3) / 60;
     constexpr float Z_LIFT_FEEDRATE = homing_feedrate[Z_AXIS] / 60;
-    constexpr float Z_CALIBRATION_THRESHOLD_TIGHT = 0.35f; // used for 7x7 MBL
+    constexpr float Z_CALIBRATION_THRESHOLD_TIGHT = 0.6f; // used for 7x7 MBL
     constexpr float Z_CALIBRATION_THRESHOLD_RELAXED = 1.f; // used for 3x3 MBL
     constexpr float MESH_HOME_Z_SEARCH_FAST = 0.35f;
     st_synchronize();
