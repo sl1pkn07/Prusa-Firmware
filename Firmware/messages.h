@@ -430,6 +430,7 @@ extern const char MSG_FILAMENT_RUNOUT_DETECTED[];
 // Common G-gcodes
 extern const char G1_E_F2700[];
 extern const char G28W[];
+extern const char MSG_G90[];
 extern const char MSG_M23[];
 extern const char MSG_M24[];
 extern const char MSG_M83[];

@@ -24,6 +24,7 @@
 
 #define HEATBED_V2
 #define STEEL_SHEET
+//#define NEW_FIRST_LAYER_CAL //from front to back
 #define TACH0PULLUP
 
 // Uncomment the below for the E3D PT100 temperature sensor (with or without PT100 Amplifier)
