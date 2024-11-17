@@ -257,10 +257,10 @@ void lay1cal_finish()
         MSG_M107,         // Turn off printer fan
         cmd_cal_finish_1, // Retract
         cmd_cal_finish_2, // Turn off bed heater
-        MSG_M702,         // Unload filament (MMU only)
-        cmd_cal_finish_3, // Turn off hotend heater
         cmd_cal_finish_4, // Lift Z
         cmd_cal_finish_5, // Go to parking position
+        MSG_M702,         // Unload filament (MMU only)
+        cmd_cal_finish_3, // Turn off hotend heater
         MSG_M84           // Disable stepper motors
         
     };
