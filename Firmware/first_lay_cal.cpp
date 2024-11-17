@@ -11,7 +11,6 @@
 #include "mmu2.h"
 #include <avr/pgmspace.h>
 #include <math.h>
-#include "temperature.h"
 
 //! @brief Count extrude length
 //!
@@ -38,7 +37,14 @@ static constexpr float spacing(float layer_height, float extrusion_width, float 
 static void lay1cal_common_enqueue_loop(const char * const * cmd_sequence, const uint8_t steps) {
     for (uint8_t i = 0; i < steps; ++i)
     {
-        enquecommand_P(static_cast<char*>(pgm_read_ptr(cmd_sequence + i)));
+        void * pgm_ptr = pgm_read_ptr(cmd_sequence + i);
+
+        // M702 is currently only used with MMU enabled
+        if (pgm_ptr == MSG_M702 && !MMU2::mmu2.Enabled()) {
+            continue;
+        }
+
+        enquecommand_P(static_cast<char*>(pgm_ptr));
     }
 }
 
@@ -237,24 +243,27 @@ void lay1cal_square(uint8_t step, float layer_height, float extrusion_width)
     }
 }
 
-void lay1cal_finish(bool mmu_enabled)
+void lay1cal_finish()
 {
-    static const char cmd_cal_finish_2[] PROGMEM = "G1E-0.075F2100"; //retract
-    static const char cmd_cal_finish_3[] PROGMEM = "G1Z10F1300"; //lift Z
-    static const char cmd_cal_finish_4[] PROGMEM = "G1X10Y180F4000"; //Go to parking position
+    static const char cmd_cal_finish_1[] PROGMEM = "G1E-0.075F2100"; // Retract
+    static const char cmd_cal_finish_2[] PROGMEM = "M140S0";         // Turn off bed heater
+    static const char cmd_cal_finish_3[] PROGMEM = "M104S0";         // Turn off hotend heater
+    static const char cmd_cal_finish_4[] PROGMEM = "G1Z10F1300";     // Lift Z
+    static const char cmd_cal_finish_5[] PROGMEM = "G1X10Y180F4000"; // Go to parking position
 
     static const char * const cmd_cal_finish[] PROGMEM =
     {
-            MSG_M107, // turn off printer fan
-            cmd_cal_finish_2,
-            cmd_cal_finish_3,
-            cmd_cal_finish_4
+        MSG_G90,          // Set to Absolute Positioning
+        MSG_M107,         // Turn off printer fan
+        cmd_cal_finish_1, // Retract
+        cmd_cal_finish_2, // Turn off bed heater
+        MSG_M702,         // Unload filament (MMU only)
+        cmd_cal_finish_3, // Turn off hotend heater
+        cmd_cal_finish_4, // Lift Z
+        cmd_cal_finish_5, // Go to parking position
+        MSG_M84           // Disable stepper motors
+        
     };
 
-    enquecommand_P(MSG_G90);
     lay1cal_common_enqueue_loop(cmd_cal_finish, (sizeof(cmd_cal_finish)/sizeof(cmd_cal_finish[0])));
-
-    if (mmu_enabled) enquecommand_P(MSG_M702); //unload from nozzle
-    disable_heater();
-    enquecommand_P(MSG_M84);// disable motors
 }
