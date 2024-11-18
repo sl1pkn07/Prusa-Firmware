@@ -51,6 +51,7 @@ static void lay1cal_common_enqueue_loop(const char * const * cmd_sequence, const
 static const char extrude_fmt_X[] PROGMEM = "G1X%gE%g";
 static const char extrude_fmt_Y[] PROGMEM = "G1Y%gE%g";
 static const char zero_extrusion[] PROGMEM = "G92E0";
+static const char feedrate_F1080[] PROGMEM = "G1F1080";
 #ifndef NEW_FIRST_LAYER_CAL
 int8_t invert = 1;
 const float short_length = 20;
@@ -120,7 +121,7 @@ void lay1cal_intro_line(bool extraPurgeNeeded, float layer_height, float extrusi
     static const char cmd_intro_mmu_8[] PROGMEM = "G1X240E25F2200";
     static const char cmd_intro_mmu_9[] PROGMEM = "G1Y-2F1000";
     static const char cmd_intro_mmu_10[] PROGMEM = "G1X200E8F1400";
-    static const char cmd_intro_mmu_11[] PROGMEM = "G1Z0.2F1000";
+    static const char cmd_intro_mmu_11[] PROGMEM = "G1Z0.2";
     static const char * const cmd_intro_mmu[] PROGMEM =
     {
         // first 2 items are only relevant if filament was not loaded - i.e. extraPurgeNeeded == true
@@ -144,6 +145,7 @@ void lay1cal_intro_line(bool extraPurgeNeeded, float layer_height, float extrusi
     }
     else
     {
+        enquecommand_P(feedrate_F1080); //fixed velocity for the intro line
         enquecommandf_P(extrude_fmt_X, (float)60, count_e(layer_height, extrusion_width * 4.f, 60));
         enquecommandf_P(extrude_fmt_X, (float)202.5, count_e(layer_height, extrusion_width * 8.f, 142.5));
     }
@@ -179,9 +181,9 @@ void lay1cal_meander_start(float layer_height, float extrusion_width)
 #ifndef NEW_FIRST_LAYER_CAL
     enquecommand_P(PSTR("G1X50Y155"));
 #endif //_NEW_FIRST_LAYER_CAL
-    static const char fmt1[] PROGMEM = "G1Z%gF7200";
+    static const char fmt1[] PROGMEM = "G1Z%g";
     enquecommandf_P(fmt1, layer_height);
-    enquecommand_P(PSTR("G1F1080"));
+    enquecommand_P(feedrate_F1080);
 #ifdef NEW_FIRST_LAYER_CAL
     enquecommandf_P(extrude_fmt_Y, short_length, count_e(layer_height, extrusion_width, short_length));
 #endif //_NEW_FIRST_LAYER_CAL
