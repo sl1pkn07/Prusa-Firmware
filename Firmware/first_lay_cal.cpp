@@ -224,17 +224,16 @@ void lay1cal_meander(float layer_height, float extrusion_width)
 
 //! @brief Print square
 //!
-//! This function needs to be called 4 times with step of 0,4,8,12
+//! This function enqueues 4 lines of the square, so it needs to be called multiple times
 //!
 //! @param cmd_buffer character buffer needed to format gcodes
-//! @param i iteration
-void lay1cal_square(uint8_t step, float layer_height, float extrusion_width)
+void lay1cal_square(float layer_height, float extrusion_width)
 {
     const float Y_spacing = spacing(layer_height, extrusion_width);
     const float long_extrusion = count_e(layer_height, extrusion_width, square_width);
     const float short_extrusion = count_e(layer_height, extrusion_width, Y_spacing);
 
-    for (uint8_t i = step; i < step+4; ++i)
+    for (uint8_t i = 0; i < 4; i++)
     {
         enquecommandf_P(extrude_fmt_X, square_width*invert, long_extrusion);
         enquecommandf_P(extrude_fmt_Y, -Y_spacing*invert, short_extrusion);
