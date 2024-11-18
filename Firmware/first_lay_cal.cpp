@@ -188,7 +188,7 @@ void lay1cal_meander_start(float layer_height, float extrusion_width)
     enquecommandf_P(extrude_fmt_Y, short_length, count_e(layer_height, extrusion_width, short_length));
 #endif //_NEW_FIRST_LAYER_CAL
 
-    enquecommand_P(PSTR("G91"));
+    enquecommand_P(MSG_G91); //enable relative XYZ
 #ifndef NEW_FIRST_LAYER_CAL
     enquecommandf_P(extrude_fmt_X, (float)25*invert, count_e(layer_height, extrusion_width * 4.f, 25));
     enquecommandf_P(extrude_fmt_X, (float)25*invert, count_e(layer_height, extrusion_width * 2.f, 25));
