@@ -184,19 +184,16 @@ void lay1cal_meander_start(float layer_height, float extrusion_width)
     static const char fmt1[] PROGMEM = "G1Z%g";
     enquecommandf_P(fmt1, layer_height);
     enquecommand_P(feedrate_F1080);
+    enquecommand_P(MSG_G91); //enable relative XYZ
 #ifdef NEW_FIRST_LAYER_CAL
     enquecommandf_P(extrude_fmt_Y, short_length, count_e(layer_height, extrusion_width, short_length));
-#endif //_NEW_FIRST_LAYER_CAL
-
-    enquecommand_P(MSG_G91); //enable relative XYZ
-#ifndef NEW_FIRST_LAYER_CAL
+    enquecommandf_P(extrude_fmt_X, long_length*invert, count_e(layer_height, extrusion_width, long_length));
+    enquecommandf_P(extrude_fmt_Y, -short_length*invert, count_e(layer_height, extrusion_width, short_length));
+#else
     enquecommandf_P(extrude_fmt_X, 25.f*invert, count_e(layer_height, extrusion_width * 4.f, 25));
     enquecommandf_P(extrude_fmt_X, 25.f*invert, count_e(layer_height, extrusion_width * 2.f, 25));
     enquecommandf_P(extrude_fmt_X, 100.f*invert, count_e(layer_height, extrusion_width, 100));
     enquecommandf_P(extrude_fmt_Y, -20.f*invert, count_e(layer_height, extrusion_width, 20));
-#else
-    enquecommandf_P(extrude_fmt_X, long_length*invert, count_e(layer_height, extrusion_width, long_length));
-    enquecommandf_P(extrude_fmt_Y, -short_length*invert, count_e(layer_height, extrusion_width, short_length));
 #endif //_NEW_FIRST_LAYER_CAL
 }
 
