@@ -48,18 +48,19 @@ static void lay1cal_common_enqueue_loop(const char * const * cmd_sequence, const
     }
 }
 
-static const char extrude_fmt_X[] PROGMEM = "G1X%gE%g";
-static const char extrude_fmt_Y[] PROGMEM = "G1Y%gE%g";
+static const char extrude_fmt_X[] PROGMEM = "G1X%.4fE%.4f";
+static const char extrude_fmt_Y[] PROGMEM = "G1Y%.4fE%.4f";
 static const char zero_extrusion[] PROGMEM = "G92E0";
 static const char feedrate_F1080[] PROGMEM = "G1F1080";
 #ifndef NEW_FIRST_LAYER_CAL
 static constexpr int8_t invert = 1;
 static constexpr float short_length = 20;
+static constexpr float square_width = short_length;
 #else
 static constexpr int8_t invert = -1;
-static constexpr float short_length = 13;
+static constexpr float short_length = 13.2812; //max_pos[1]/2 / meander * 2
+static constexpr float square_width = short_length*2;
 #endif //NEW_FIRST_LAYER_CAL
-static constexpr float square_width = 20;
 static constexpr float long_length = 150;
 
 //! @brief Wait for preheat
@@ -120,7 +121,7 @@ void lay1cal_intro_line(bool extraPurgeNeeded, float layer_height, float extrusi
     static const char cmd_intro_mmu_6[] PROGMEM = "G1Z0.3F1000";
     static const char cmd_intro_mmu_8[] PROGMEM = "G1X240E25F2200";
     static const char cmd_intro_mmu_9[] PROGMEM = "G1Y-2F1000";
-    static const char cmd_intro_mmu_10[] PROGMEM = "G1X200E8F1400";
+    static const char cmd_intro_mmu_10[] PROGMEM = "G1X202.5E8F1400";
     static const char cmd_intro_mmu_11[] PROGMEM = "G1Z0.2";
     static const char * const cmd_intro_mmu[] PROGMEM =
     {
@@ -181,7 +182,7 @@ void lay1cal_meander_start(float layer_height, float extrusion_width)
 #ifndef NEW_FIRST_LAYER_CAL
     enquecommand_P(PSTR("G1X50Y155"));
 #endif //_NEW_FIRST_LAYER_CAL
-    static const char fmt1[] PROGMEM = "G1Z%g";
+    static const char fmt1[] PROGMEM = "G1Z%.2f";
     enquecommandf_P(fmt1, layer_height);
     enquecommand_P(feedrate_F1080);
     enquecommand_P(MSG_G91); //enable relative XYZ
@@ -240,24 +241,23 @@ void lay1cal_square(float layer_height, float extrusion_width)
 
 void lay1cal_finish()
 {
-    static const char cmd_cal_finish_1[] PROGMEM = "G1E-0.075F2100"; // Retract
-    static const char cmd_cal_finish_2[] PROGMEM = "M140S0";         // Turn off bed heater
-    static const char cmd_cal_finish_3[] PROGMEM = "M104S0";         // Turn off hotend heater
-    static const char cmd_cal_finish_4[] PROGMEM = "G1Z10F1300";     // Lift Z
-    static const char cmd_cal_finish_5[] PROGMEM = "G1X10Y180F4000"; // Go to parking position
+    static const char cmd_cal_finish_3[] PROGMEM = "G1E-0.075F2100"; // Retract
+    static const char cmd_cal_finish_4[] PROGMEM = "M140S0";         // Turn off bed heater
+    static const char cmd_cal_finish_5[] PROGMEM = "G1Z10F1300";     // Lift Z
+    static const char cmd_cal_finish_6[] PROGMEM = "G1X10Y180F4000"; // Go to parking position
+    static const char cmd_cal_finish_8[] PROGMEM = "M104S0";         // Turn off hotend heater
 
     static const char * const cmd_cal_finish[] PROGMEM =
     {
         MSG_G90,          // Set to Absolute Positioning
         MSG_M107,         // Turn off printer fan
-        cmd_cal_finish_1, // Retract
-        cmd_cal_finish_2, // Turn off bed heater
-        cmd_cal_finish_4, // Lift Z
-        cmd_cal_finish_5, // Go to parking position
+        cmd_cal_finish_3, // Retract
+        cmd_cal_finish_4, // Turn off bed heater
+        cmd_cal_finish_5, // Lift Z
+        cmd_cal_finish_6, // Go to parking position
         MSG_M702,         // Unload filament (MMU only)
-        cmd_cal_finish_3, // Turn off hotend heater
+        cmd_cal_finish_8, // Turn off hotend heater
         MSG_M84           // Disable stepper motors
-        
     };
 
     lay1cal_common_enqueue_loop(cmd_cal_finish, (sizeof(cmd_cal_finish)/sizeof(cmd_cal_finish[0])));
