@@ -146,8 +146,8 @@ void lay1cal_intro_line(bool extraPurgeNeeded, float layer_height, float extrusi
     else
     {
         enquecommand_P(feedrate_F1080); //fixed velocity for the intro line
-        enquecommandf_P(extrude_fmt_X, (float)60, count_e(layer_height, extrusion_width * 4.f, 60));
-        enquecommandf_P(extrude_fmt_X, (float)202.5, count_e(layer_height, extrusion_width * 8.f, 142.5));
+        enquecommandf_P(extrude_fmt_X, 60.f, count_e(layer_height, extrusion_width * 4.f, 60));
+        enquecommandf_P(extrude_fmt_X, 202.5f, count_e(layer_height, extrusion_width * 8.f, 142.5));
     }
 }
 
@@ -190,10 +190,10 @@ void lay1cal_meander_start(float layer_height, float extrusion_width)
 
     enquecommand_P(MSG_G91); //enable relative XYZ
 #ifndef NEW_FIRST_LAYER_CAL
-    enquecommandf_P(extrude_fmt_X, (float)25*invert, count_e(layer_height, extrusion_width * 4.f, 25));
-    enquecommandf_P(extrude_fmt_X, (float)25*invert, count_e(layer_height, extrusion_width * 2.f, 25));
-    enquecommandf_P(extrude_fmt_X, (float)100*invert, count_e(layer_height, extrusion_width, 100));
-    enquecommandf_P(extrude_fmt_Y, (float)-20*invert, count_e(layer_height, extrusion_width, 20));
+    enquecommandf_P(extrude_fmt_X, 25.f*invert, count_e(layer_height, extrusion_width * 4.f, 25));
+    enquecommandf_P(extrude_fmt_X, 25.f*invert, count_e(layer_height, extrusion_width * 2.f, 25));
+    enquecommandf_P(extrude_fmt_X, 100.f*invert, count_e(layer_height, extrusion_width, 100));
+    enquecommandf_P(extrude_fmt_Y, -20.f*invert, count_e(layer_height, extrusion_width, 20));
 #else
     enquecommandf_P(extrude_fmt_X, long_length*invert, count_e(layer_height, extrusion_width, long_length));
     enquecommandf_P(extrude_fmt_Y, -short_length*invert, count_e(layer_height, extrusion_width, short_length));
