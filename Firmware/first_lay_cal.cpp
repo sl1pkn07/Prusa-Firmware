@@ -204,15 +204,10 @@ void lay1cal_meander(float layer_height, float extrusion_width)
     const float long_extrusion = count_e(layer_height, extrusion_width, long_length);
     const float short_extrusion = count_e(layer_height, extrusion_width, short_length);
 
-    float x_pos = long_length;
-
-    for(uint8_t i = 0; i <= 4; ++i)
+    for(int8_t i = 0, xdir = -invert; i <= 4; i++, xdir = -xdir)
     {
-        enquecommandf_P(extrude_fmt_X, -x_pos*invert, long_extrusion);
-
-        x_pos = -x_pos;
-
-        enquecommandf_P(extrude_fmt_Y, -short_length*invert, short_extrusion);
+        enquecommandf_P(extrude_fmt_X, xdir * long_length, long_extrusion);
+        enquecommandf_P(extrude_fmt_Y, invert * -short_length, short_extrusion);
     }
 #ifdef NEW_FIRST_LAYER_CAL
     enquecommandf_P(extrude_fmt_X, -(long_length/2-square_width/2), long_extrusion); //~Middle of bed X125
