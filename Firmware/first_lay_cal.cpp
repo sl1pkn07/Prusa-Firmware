@@ -37,7 +37,7 @@ static constexpr float spacing(float layer_height, float extrusion_width, float 
 static void lay1cal_common_enqueue_loop(const char * const * cmd_sequence, const uint8_t steps) {
     for (uint8_t i = 0; i < steps; ++i)
     {
-        void * pgm_ptr = pgm_read_ptr(cmd_sequence + i);
+        void * const pgm_ptr = pgm_read_ptr(cmd_sequence + i);
 
         // M702 is currently only used with MMU enabled
         if (pgm_ptr == MSG_M702 && !MMU2::mmu2.Enabled()) {
@@ -53,14 +53,14 @@ static const char extrude_fmt_Y[] PROGMEM = "G1Y%gE%g";
 static const char zero_extrusion[] PROGMEM = "G92E0";
 static const char feedrate_F1080[] PROGMEM = "G1F1080";
 #ifndef NEW_FIRST_LAYER_CAL
-int8_t invert = 1;
-const float short_length = 20;
+static constexpr int8_t invert = 1;
+static constexpr float short_length = 20;
 #else
-int8_t invert = -1;
-const float short_length = 13;
+static constexpr int8_t invert = -1;
+static constexpr float short_length = 13;
 #endif //NEW_FIRST_LAYER_CAL
-const float square_width = 20;
-const float long_length = 150;
+static constexpr float square_width = 20;
+static constexpr float long_length = 150;
 
 //! @brief Wait for preheat
 void lay1cal_wait_preheat()
